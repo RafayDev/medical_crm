@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ClientController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/clients', [App\Http\Controllers\ClientController::class, 'index'])->name('clients');
+Route::post('/add-client', [App\Http\Controllers\ClientController::class, 'create'])->name('add-client');
+Route::get('/delete-client/{id}', [App\Http\Controllers\ClientController::class, 'delete'])->name('delete-client');
+Route::get('/catagories', [App\Http\Controllers\CatagoryController::class, 'index'])->name('catagories');
+Route::post('/add-catagory', [App\Http\Controllers\CatagoryController::class, 'create'])->name('add-catagory');
+Route::get('/delete-catagory/{id}', [App\Http\Controllers\CatagoryController::class, 'delete'])->name('delete-catagory');
+Route::post('/edit-catagory/{id}', [App\Http\Controllers\CatagoryController::class, 'update'])->name('edit-catagory');
+Route::get('/assigned-types/{id}', [App\Http\Controllers\CatagoryController::class, 'assigned_type'])->name('assigned-types');
+Route::post('/assign-types', [App\Http\Controllers\CatagoryController::class, 'assign_type'])->name('assign-types');
+Route::get('/types', [App\Http\Controllers\TypeController::class, 'index'])->name('types');
+Route::post('/add-type', [App\Http\Controllers\TypeController::class, 'create'])->name('add-type');
+Route::get('/delete-type/{id}', [App\Http\Controllers\TypeController::class, 'delete'])->name('delete-type');
+Route::post('/edit-type/{id}', [App\Http\Controllers\TypeController::class, 'update'])->name('edit-type');
+Route::get('/invoices', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoices');

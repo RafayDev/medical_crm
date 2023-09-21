@@ -6,10 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Type;
 use App\Models\CategoryType;
+use App\Models\Product;
 use Illuminate\Support\Str;
 
 class CatagoryController extends Controller
 {
+        /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index()
     {
         $categories = Category::all();
@@ -79,5 +95,20 @@ class CatagoryController extends Controller
             }
         }
         return redirect('/catagories')->with('success', 'Types Assigned Successfully');
+    }
+    public function category_types($id)
+    {
+        $category = Category::find($id);
+        $category_types = CategoryType::where('category_id', $id)->get();
+        $data = compact('category', 'category_types');
+        return view('catagories.category_types')->with($data);
+    }
+    public function category_type_products($category_id, $type_id)
+    {
+        $category = Category::find($category_id);
+        $type = Type::find($type_id);
+        $products = Product::where('category_id', $category_id)->where('type_id', $type_id)->get();
+        $data = compact('category', 'type', 'products');
+        return view('catagories.category_type_products')->with($data);
     }
 }

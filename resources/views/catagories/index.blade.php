@@ -46,7 +46,7 @@
     @foreach($categories as $category)
     <div class="col-md-3">
         <div class="box bg-light">
-            <img src="{{asset('storage/categories/'.$category->image)}}" alt="{{$category->name}}" class="img-fluid">
+           <a href="{{route('category-types',$category->id)}}"> <img src="{{asset('storage/categories/'.$category->image)}}" alt="{{$category->name}}" height = "100px" width = "100%"></a>
             <div class="box-body">
                 <h5>{{$category->name}}</h5>
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-category_id="{{$category->id}}"

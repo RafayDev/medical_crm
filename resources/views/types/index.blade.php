@@ -46,7 +46,7 @@
     @foreach($types as $type)
     <div class="col-md-3">
         <div class="box bg-light">
-            <img src="{{asset('storage/types/'.$type->image)}}" alt="{{$type->name}}" class="img-fluid">
+            <img src="{{asset('storage/types/'.$type->image)}}" alt="{{$type->name}}" height = "100px" width = "100%">
             <div class="box-body">
                 <h5>{{$type->name}}</h5>
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-type_id="{{$type->id}}"

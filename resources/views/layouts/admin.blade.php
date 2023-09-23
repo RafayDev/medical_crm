@@ -41,8 +41,12 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('frontend/css/style.css')}}" rel="stylesheet">
-    
-
+    <link href="{{ asset('frontend\css\fontawesome\css\all.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('frontend/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>

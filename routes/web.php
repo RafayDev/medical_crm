@@ -46,3 +46,4 @@ Route::get('/sub-types', [App\Http\Controllers\SubTypeController::class, 'index'
 Route::post('/add-sub-type', [App\Http\Controllers\SubTypeController::class, 'create'])->name('add-sub-type');
 Route::get('/delete-sub-type/{id}', [App\Http\Controllers\SubTypeController::class, 'delete'])->name('delete-sub-type');
 Route::post('/edit-sub-type/{id}', [App\Http\Controllers\SubTypeController::class, 'update'])->name('edit-sub-type');
+Route::get('/get-sub-type-by-type/{id}', [App\Http\Controllers\SubTypeController::class, 'get_sub_type_by_type'])->name('get-sub-type-by-type');

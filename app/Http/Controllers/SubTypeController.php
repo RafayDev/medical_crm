@@ -37,4 +37,9 @@ class SubTypeController extends Controller
         $sub_type->save();
         return redirect()->back()->with('success', 'Sub Type Updated Successfully');
     }
+    public function get_sub_type_by_type($id)
+    {
+        $sub_types = SubType::where('type_id', $id)->get();
+        return response()->json($sub_types);
+    }
 }

@@ -50,6 +50,12 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="sub_type">Product Sub Type</label>
+                                <select name="sub_type" id="sub_type" class="form-control">
+                                    <option value="">Select Sub Type</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="price">Product Price</label>
                                 <input type="text" name="price" id="price" class="form-control"
                                     placeholder="Enter Product Price">
@@ -74,12 +80,14 @@
     @foreach($products as $product)
     <div class="col-md-3">
         <div class="box bg-light">
-            <img src="{{asset('storage/products/'.$product->image)}}" alt="{{$product->name}}" height = "200px" width = "100%">
+            <img src="{{asset('storage/products/'.$product->image)}}" alt="{{$product->name}}" height="200px"
+                width="100%">
             <div class="box-body">
                 <h5>{{$product->name}}</h5>
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-product_id="{{$product->id}}"
                     data-product_name="{{$product->name}}" data-product_category="{{$product->category_id}}"
                     data-product_type="{{$product->type_id}}" data-product_price="{{$product->price}}"
+                    data-product_sub_type="{{$product->sub_type_id}}"
                     data-product_description="{{$product->description}}" data-bs-toggle="modal"
                     data-bs-target="#editModal"><i class="fa fa-edit"></i></button>
                 <button class="btn btn-square btn-danger m-2 delete-btn" type="button"
@@ -146,6 +154,12 @@
                             @foreach ($types as $type)
                             <option value="{{$type->id}}">{{$type->name}}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sub_type">Product Sub Type</label>
+                        <select name="sub_type" id="sub_type" class="form-control">
+                            <option value="">Select Sub Type</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -243,14 +257,45 @@ $(document).on('click', '.edit-btn', function() {
     var product_name = $(this).data('product_name');
     var product_category = $(this).data('product_category');
     var product_type = $(this).data('product_type');
+    var product_sub_type = $(this).data('product_sub_type');
     var product_price = $(this).data('product_price');
     var product_description = $(this).data('product_description');
+    $.ajax({
+        url: '/get-sub-type-by-type/' + product_type,
+        method: 'GET',
+        success: function(response) {
+            var html = '';
+            $.each(response, function(key, sub_type) {
+                html += '<option value="' + sub_type.id + '">' + sub_type.name +
+                '</option>';
+            });
+            $('#editProductForm #sub_type').html(html);
+            $('#editProductForm #sub_type').val(product_sub_type);
+        }
+    });
     $('#editProductForm #name').val(product_name);
     $('#editProductForm #category').val(product_category);
     $('#editProductForm #type').val(product_type);
+   
     $('#editProductForm #price').val(product_price);
     $('#editProductForm #description').val(product_description);
     $('#editProductForm').attr('action', '/edit-product/' + product_id);
+});
+//get sub types by type
+$(document).on('change', '#type', function() {
+    var type_id = $(this).val();
+    $.ajax({
+        url: '/get-sub-type-by-type/' + type_id,
+        method: 'GET',
+        success: function(response) {
+            var html = '';
+            $.each(response, function(key, sub_type) {
+                html += '<option value="' + sub_type.id + '">' + sub_type.name +
+                '</option>';
+            });
+            $('#sub_type').html(html);
+        }
+    });
 });
 </script>
 @endsection

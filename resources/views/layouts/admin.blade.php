@@ -3,16 +3,17 @@
 
 <head>
     <style>
-        .box{
-            border: 1px solid #ccc;
-            border-radius: 15px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .box-body{
-            padding: 10px;
-            text-align: center;
-        }
+    .box {
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .box-body {
+        padding: 10px;
+        text-align: center;
+    }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,9 +45,9 @@
     <link href="{{ asset('frontend\css\fontawesome\css\all.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('frontend/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -62,7 +63,7 @@
         @include('layouts.sidebar')
         <div class="content">
             @include('layouts.header')
-                @yield('content')
+            @yield('content')
             @include('layouts.footer')
 
         </div>
@@ -85,4 +86,22 @@
     <script src="{{asset('frontend/js/main.js')}}"></script>
 </body>
 @yield('scripts')
+<script>
+//get unread notifications
+function get_unread_notifications() {
+    $.ajax({
+        url: "{{route('notifications')}}",
+        type: "GET",
+        success: function(response) {
+            $('#notification-list').html(response.html);
+            $('#notification-count').html(response.notification_count);
+        }
+    });
+}
+get_unread_notifications();
+// call every 5 seconds
+setInterval(function() {
+    get_unread_notifications();
+}, 5000);
+</script>
 </html>

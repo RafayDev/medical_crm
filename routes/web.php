@@ -47,3 +47,12 @@ Route::post('/add-sub-type', [App\Http\Controllers\SubTypeController::class, 'cr
 Route::get('/delete-sub-type/{id}', [App\Http\Controllers\SubTypeController::class, 'delete'])->name('delete-sub-type');
 Route::post('/edit-sub-type/{id}', [App\Http\Controllers\SubTypeController::class, 'update'])->name('edit-sub-type');
 Route::get('/get-sub-type-by-type/{id}', [App\Http\Controllers\SubTypeController::class, 'get_sub_type_by_type'])->name('get-sub-type-by-type');
+Route::post('/add-to-cart', [App\Http\Controllers\CartController::class, 'add_to_cart'])->name('add-to-cart');
+Route::get('/carts', [App\Http\Controllers\CartController::class, 'index'])->name('carts');
+Route::get('/delete-cart/{id}', [App\Http\Controllers\CartController::class, 'delete'])->name('delete-cart');
+Route::get('/send-query/{user_id}', [App\Http\Controllers\CartController::class, 'send_query'])->name('send-query');
+Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'get_unread_notifications'])->name('notifications');
+Route::get('/mark-as-read', [App\Http\Controllers\NotificationController::class, 'mark_as_read'])->name('mark-as-read');
+Route::get('/queries', [App\Http\Controllers\QueryController::class, 'index'])->name('queries');
+Route::get('/view-query/{id}', [App\Http\Controllers\QueryController::class, 'view'])->name('view-query');
+Route::get('/approve-query/{id}', [App\Http\Controllers\QueryController::class, 'approve'])->name('approve-query');

@@ -21,28 +21,29 @@
                 <div id="des{{$product->id}}" class="collapse">
                     {{$product->description}}
                 </div>
-                <form action="#" method="post">
+                <form action="{{route('add-to-cart')}}" method="POST">
                     @csrf
                     <input type="hidden" name="product_id" value="{{$product->id}}">
-                <div class="row">
-                    <div class="col-md-9">
-                        <div class="wrap mt-1">
-                            <button type="button" id="sub" class="btn btn-sm btn-danger sub"
-                                style="width: 30px; hieght:30px; text-align: center;"><i
-                                    class="fa-solid fa-minus"></i></button>
-                            <input class="count" type="text" id="1" value="1" min="1" max="100"
-                                style="width: 50px; text-align: center;" />
-                            <button type="button" id="add" class="btn btn-sm btn-success add"
-                                style="width: 30px; hieght:30px; text-align: center;"><i
-                                    class="fa-solid fa-plus"></i></button>
+                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="wrap mt-1">
+                                <button type="button" id="sub" class="btn btn-sm btn-danger sub"
+                                    style="width: 30px; hieght:30px; text-align: center;"><i
+                                        class="fa-solid fa-minus"></i></button>
+                                <input class="count" type="text" id="1" value="1" min="1" max="100" name="quantity"
+                                    style="width: 50px; text-align: center;" />
+                                <button type="button" id="add" class="btn btn-sm btn-success add"
+                                    style="width: 30px; hieght:30px; text-align: center;"><i
+                                        class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-1">
+                            <button type="submit" class="btn btn-sm btn-primary"><i
+                                    class="fa-solid fa-cart-plus"></i></button>
                         </div>
                     </div>
-                    <div class="col-md-3 mt-1">
-                        <button type="submit" class="btn btn-sm btn-primary"><i
-                                class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-</form>
+                </form>
             </div>
         </div>
     </div>

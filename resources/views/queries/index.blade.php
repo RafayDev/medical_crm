@@ -12,8 +12,8 @@
                 <thead>
                     <th>#</th>
                     <th>Client Name</th>
-                    <th>Query Date</th>
                     <th>Query Status</th>
+                    <th>Query Date</th>
                     <th>Actions</th>
                 </thead>
                 <tbody>
@@ -28,10 +28,13 @@
                         @endif
                         <td>{{$query->created_at->format('d-m-Y')}}</td>
                         <td>
-                            <a href="{{route('view-query',$query->id)}}" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i></a>
+                            <a href="{{route('view-query',$query->id)}}" class="btn btn-success btn-sm"><i
+                                    class="fa-solid fa-eye"></i></a>
                             <!-- Approve  -->
                             @if($query->status == 'pending' && auth()->user()->user_type == 'admin')
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#approveModal" data-query_id="{{$query->id}}"><i class="fa-solid fa-check"></i></button>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#productsModal" data-query_id="{{$query->id}}"><i
+                                    class="fa-solid fa-check"></i></button>
                             @endif
                         </td>
                     </tr>
@@ -60,14 +63,58 @@
         </div>
     </div>
 </div>
+<!-- Query Products Modal -->
+<div class="modal fade" id="productsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Products</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('approve-query')}}" method="post">
+                @csrf
+                <input type="hidden" id="query_id" name="query_id">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Categorie</th>
+                                <th>Type</th>
+                                <th>Sub-Type</th>
+                                <th>Quantity</th>
+                                <th>Price per Unit ($)</th>
+                                <th>Total Price ($)</th>
+                            </thead>
+                            <tbody id="products">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Create Invoice</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 @endsection
 @section('scripts')
 <script>
-    $('#approveModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget)
-        var query_id = button.data('query_id')
-        var modal = $(this)
-        modal.find('.modal-footer #modal-approve-btn').attr("href", "/approve-query/" + query_id);
+$('#productsModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget)
+    var query_id = button.data('query_id')
+    $('#query_id').val(query_id)
+    var modal = $(this)
+    $.ajax({
+        url: "/get-query-products/" + query_id,
+        type: "GET",
+        success: function(response) {
+            $('#products').html(response);
+        }
     })
+})
 </script>
 @endsection

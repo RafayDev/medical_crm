@@ -39,7 +39,6 @@ class ProductController extends Controller
         $product->category_id = $request->category;
         $product->type_id = $request->type;
         $product->sub_type_id = $request->sub_type;
-        $product->price = $request->price;
         $product->description = $request->description;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -70,7 +69,6 @@ class ProductController extends Controller
         $product->category_id = $request->category;
         $product->type_id = $request->type;
         $product->sub_type_id = $request->sub_type;
-        $product->price = $request->price;
         $product->description = $request->description;
         $product->save();
         return redirect()->back()->with('success', 'Product Updated Successfully');

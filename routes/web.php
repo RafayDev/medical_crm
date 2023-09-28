@@ -55,4 +55,7 @@ Route::get('/notifications', [App\Http\Controllers\NotificationController::class
 Route::get('/mark-as-read', [App\Http\Controllers\NotificationController::class, 'mark_as_read'])->name('mark-as-read');
 Route::get('/queries', [App\Http\Controllers\QueryController::class, 'index'])->name('queries');
 Route::get('/view-query/{id}', [App\Http\Controllers\QueryController::class, 'view'])->name('view-query');
-Route::get('/approve-query/{id}', [App\Http\Controllers\QueryController::class, 'approve'])->name('approve-query');
+Route::post('/approve-query', [App\Http\Controllers\QueryController::class, 'approve'])->name('approve-query');
+Route::get('/get-query-products/{id}', [App\Http\Controllers\QueryController::class, 'get_query_products'])->name('get-query-products');
+Route::get('/invoices',[App\Http\Controllers\InvoiceController::class, 'index'])->name('invoices');
+Route::get('/view-invoice/{id}',[App\Http\Controllers\InvoiceController::class, 'view'])->name('view-invoice');

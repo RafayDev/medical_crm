@@ -37,27 +37,15 @@ $total = 0;
                 <th>#</th>
                 <th>Product Name</th>
                 <th>Quantity</th>
-                <th>Price($)</th>
-                <th>Sub-Total($)</th>
             </thead>
             <tbody>
                 @foreach($query->query_products as $query_product)
-                @php
-                $total = $total + ($query_product->product->price*$query_product->quantity);
-                @endphp
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$query_product->product->name}}</td>
                     <td>{{$query_product->quantity}}</td>
-                    <td>{{$query_product->product->price}} $</td>
-                    <td>{{$query_product->product->price*$query_product->quantity}} $</td>
                 </tr>
                 @endforeach
-                <tr>
-                        <td colspan="3"></td>
-                        <td><strong>Total($)</strong></td>
-                        <td><strong>{{ $total }} $</strong></td>
-                    </tr>
             </tbody>
         </table>
        

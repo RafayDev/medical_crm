@@ -56,11 +56,6 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="price">Product Price</label>
-                                <input type="text" name="price" id="price" class="form-control"
-                                    placeholder="Enter Product Price">
-                            </div>
-                            <div class="form-group">
                                 <label for="despription">Product Description</label>
                                 <textarea name="description" id="description" cols="30" rows="5" class="form-control"
                                     placeholder="Enter Product Description"></textarea>
@@ -163,11 +158,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="price">Product Price</label>
-                        <input type="text" name="price" id="price" class="form-control"
-                            placeholder="Enter Product Price">
-                    </div>
-                    <div class="form-group">
                         <label for="despription">Product Description</label>
                         <textarea name="description" id="description" cols="30" rows="5" class="form-control"
                             placeholder="Enter Product Description"></textarea>
@@ -203,10 +193,6 @@ $(document).ready(function() {
             type: {
                 required: true
             },
-            price: {
-                required: true,
-                number: true
-            },
             description: {
                 required: true,
                 minlength: 3,
@@ -228,10 +214,6 @@ $(document).ready(function() {
             },
             type: {
                 required: 'Please select product type'
-            },
-            price: {
-                required: 'Please enter product price',
-                number: 'Please enter valid product price'
             },
             description: {
                 required: 'Please enter product description',
@@ -258,7 +240,6 @@ $(document).on('click', '.edit-btn', function() {
     var product_category = $(this).data('product_category');
     var product_type = $(this).data('product_type');
     var product_sub_type = $(this).data('product_sub_type');
-    var product_price = $(this).data('product_price');
     var product_description = $(this).data('product_description');
     $.ajax({
         url: '/get-sub-type-by-type/' + product_type,

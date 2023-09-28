@@ -12,15 +12,7 @@
             <img src="{{asset('storage/products/'.$product->image)}}" height="200px" width="100%">
             <div class="mt-2">
                 <h5>{{$product->name}}</h5>
-                <h6>Price: {{$product->price}} $</h6>
-                <div class="text-left">
-                    <p data-toggle="collapse" data-target="#des{{$product->id}}"><i
-                            class="fa-solid fa-chevron-down"></i>
-                    </p>
-                </div>
-                <div id="des{{$product->id}}" class="collapse">
-                    {{$product->description}}
-                </div>
+
                 <form action="{{route('add-to-cart')}}" method="POST">
                     @csrf
                     <input type="hidden" name="product_id" value="{{$product->id}}">
@@ -42,6 +34,14 @@
                             <button type="submit" class="btn btn-sm btn-primary"><i
                                     class="fa-solid fa-cart-plus"></i></button>
                         </div>
+                    </div>
+                    <div class="text-right mt-3">
+                        <p data-toggle="collapse" data-target="#des{{$product->id}}"><i
+                                class="fa-solid fa-chevron-down"></i>
+                        </p>
+                    </div>
+                    <div id="des{{$product->id}}" class="collapse">
+                        {{$product->description}}
                     </div>
                 </form>
             </div>

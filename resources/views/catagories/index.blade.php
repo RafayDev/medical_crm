@@ -6,10 +6,11 @@
     </div>
     <div class="col-md-2 mt-3">
         <!-- Button trigger modal -->
+        @if(Auth::user()->user_type == 'admin')
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="fa fa-plus"></i> Category
         </button>
-
+@endif
         <!-- Modal -->
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -49,6 +50,7 @@
            <a href="{{route('category-types',$category->id)}}"> <img src="{{asset('storage/categories/'.$category->image)}}" alt="{{$category->name}}" height = "100px" width = "100%"></a>
             <div class="box-body">
                 <h5>{{$category->name}}</h5>
+                @if(Auth::user()->user_type == 'admin')
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-category_id="{{$category->id}}"
                 data-category_name = "{{$category->name}}"
                 data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa fa-edit"></i></button>
@@ -57,6 +59,7 @@
                         class="fa fa-trash"></i></button>
                 <a href="{{route('assigned-types', $category->id)}}" class="btn btn-square btn-success m-2"><i
                         class="fa fa-plus"></i></a> 
+                @endif
             </div>
             <!-- <a href="#" class="btn btn-sm btn-primary">Edit</a>
                 <a href="#" class="btn btn-sm btn-danger">Delete</a> -->

@@ -6,10 +6,11 @@
     </div>
     <div class="col-md-2 mt-3">
         <!-- Button trigger modal -->
+        @if(Auth::user()->user_type == 'admin')
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="fa fa-plus"></i> Product
         </button>
-
+@endif
         <!-- Modal -->
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -77,8 +78,9 @@
         <div class="box bg-light">
             <img src="{{asset('storage/products/'.$product->image)}}" alt="{{$product->name}}" height="200px"
                 width="100%">
-            <div class="box-body">
+            <div class="mt-3">
                 <h5>{{$product->name}}</h5>
+                @if(Auth::user()->user_type == 'admin')
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-product_id="{{$product->id}}"
                     data-product_name="{{$product->name}}" data-product_category="{{$product->category_id}}"
                     data-product_type="{{$product->type_id}}" data-product_price="{{$product->price}}"
@@ -88,6 +90,40 @@
                 <button class="btn btn-square btn-danger m-2 delete-btn" type="button"
                     data-product_id="{{$product->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
                         class="fa fa-trash"></i></button>
+                @endif
+                @if(Auth::user()->user_type == 'client')
+                <form action="{{route('add-to-cart')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="wrap mt-1">
+                                <button type="button" id="sub" class="btn btn-sm btn-danger sub"
+                                    style="width: 30px; hieght:30px; text-align: center;"><i
+                                        class="fa-solid fa-minus"></i></button>
+                                <input class="count" type="text" id="1" value="1" min="1" max="100" name="quantity"
+                                    style="width: 50px; text-align: center;" />
+                                <button type="button" id="add" class="btn btn-sm btn-success add"
+                                    style="width: 30px; hieght:30px; text-align: center;"><i
+                                        class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-1">
+                            <button type="submit" class="btn btn-sm btn-primary"><i
+                                    class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="text-right mt-3">
+                        <p data-toggle="collapse" data-target="#des{{$product->id}}"><i
+                                class="fa-solid fa-chevron-down"></i>
+                        </p>
+                    </div>
+                    <div id="des{{$product->id}}" class="collapse">
+                        {{$product->description}}
+                    </div>
+                </form>
+                @endif
             </div>
             <!-- <a href="#" class="btn btn-sm btn-primary">Edit</a>
                 <a href="#" class="btn btn-sm btn-danger">Delete</a> -->

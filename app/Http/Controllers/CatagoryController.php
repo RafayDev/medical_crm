@@ -8,6 +8,7 @@ use App\Models\Type;
 use App\Models\SubType;
 use App\Models\CategoryType;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class CatagoryController extends Controller
@@ -29,6 +30,14 @@ class CatagoryController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->user_type == 'client')
+        {
+            $user = User::find(auth()->user()->id);
+            $user_categories = $user->user_categories;
+            $categories = Category::whereIn('id', $user_categories->pluck('category_id'))->get();
+            $data = compact('categories');
+            return view('catagories.index')->with($data);
+        }
         $categories = Category::all();
         $data = compact('categories');
         return view('catagories.index')->with($data);

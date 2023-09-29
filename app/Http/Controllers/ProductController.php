@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Type;
-
+use App\Models\User;
 class ProductController extends Controller
 {
         /**
@@ -26,9 +26,18 @@ class ProductController extends Controller
      */
     public function index()
     {
+        
         $categories = Category::all();
         $types = Type::all();
         $products = Product::all();
+        if(auth()->user()->user_type == 'client')
+        {
+            $user = User::find(auth()->user()->id);
+            $user_categories = $user->user_categories;
+            $products = Product::whereIn('category_id', $user_categories->pluck('category_id'))->get();
+            $data = compact('categories', 'types', 'products');
+            return view('products.index')->with($data);
+        }
         $data = compact('categories', 'types', 'products');
         return view('products.index')->with($data);
     }

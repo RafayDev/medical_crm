@@ -16,10 +16,14 @@
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="/home" class ="{{ (request()->is('home')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    @if(Auth::user()->user_type == 'admin')
                     <a href="/clients" class="{{ (request()->is('clients')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-users me-2"></i>Clients</a>
+                    @endif
                     <a href="/catagories" class="{{ (request()->is('catagories')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-bars me-2"></i>Catagories</a>
+                    @if(Auth::user()->user_type == 'admin')
                     <a href="/types" class="{{ (request()->is('types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Types</a>
                     <a href="/sub-types" class="{{ (request()->is('sub-types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Sub Types</a>
+                    @endif
                     <a href="/products" class="{{ (request()->is('products')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-boxes me-2"></i>Products</a>
                     <a href="/queries" class="{{ (request()->is('queries')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-question-circle me-2"></i>Queries</a>
                     <a href="/invoices" class="{{ (request()->is('invoices')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Invocies</a>

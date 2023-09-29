@@ -25,6 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/clients', [App\Http\Controllers\ClientController::class, 'index'])->name('clients');
 Route::post('/add-client', [App\Http\Controllers\ClientController::class, 'create'])->name('add-client');
 Route::get('/delete-client/{id}', [App\Http\Controllers\ClientController::class, 'delete'])->name('delete-client');
+Route::post('/update-client/{id}', [App\Http\Controllers\ClientController::class, 'update'])->name('update-client');
 Route::get('/catagories', [App\Http\Controllers\CatagoryController::class, 'index'])->name('catagories');
 Route::post('/add-catagory', [App\Http\Controllers\CatagoryController::class, 'create'])->name('add-catagory');
 Route::get('/delete-catagory/{id}', [App\Http\Controllers\CatagoryController::class, 'delete'])->name('delete-catagory');

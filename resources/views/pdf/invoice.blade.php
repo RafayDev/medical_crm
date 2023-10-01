@@ -18,7 +18,7 @@ h1 {
 
 .small {
     /* low line spacing  */
-    line-height: 0.7;
+    line-height: 1;
 }
 
 .details {
@@ -60,18 +60,86 @@ $total = 0;
 <body>
     <div class="container">
         <h1>Invoice</h1>
-        <div class="row">
-            <div class="col">
-                <p class="small">Client Name: {{$invoice->user->name}}</p>
-                <p class="small">Company: {{$invoice->user->company->name}}</p>
-            </div>
-            <div class="col"></div>
-            <div class="col">
-                <p class="small">Invoice Date: {{$invoice->created_at->format('d-m-Y')}}</p>
-                <p class="small">Invoice No: AML-{{$invoice->id}}</p>
-            </div>
-
-        </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td >Company Name: </td>
+                            <td>{{$invoice->user->company->name}}</td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >Date: </td>
+                            <td>{{$invoice->created_at->format('d-m-Y')}}</td>
+                        </tr>
+                        <tr>
+                            <td >Client Name: </td>
+                            <td>{{$invoice->user->name}}</td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td >&nbsp; </td>
+                            <td>Invoice No: </td>
+                            <td>AML-{{$invoice->id}}</td>
+                        </tr>
+                        <tr>
+                            <td >Email: </td>
+                            <td>{{$invoice->user->email}}</td>
+                        </tr>
+                        <tr>
+                            <td >Phone: </td>
+                            <td>{{$invoice->user->phone}}</td>
+                        </tr>
+                        <tr> 
+                            <td >Address: </td>
+                            <td>{{$invoice->user->company->address}}</td>
+                        </tr>
+                    </tbody>
+                </table>
         <table width="100%" border="1" style="text-align:center;margin-top: 20px;" cellspacing="0" cellpadding="2">
             <thead>
                 <th>#</th>
@@ -88,14 +156,22 @@ $total = 0;
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$invoice_product->product->name}}</td>
-                    <td>{{$invoice_product->price_per_unit}}</td>
+                    <td>{{$invoice_product->price_per_unit}} $</td>
                     <td>{{$invoice_product->quantity}}</td>
-                    <td>{{$invoice_product->total_price}}</td>
+                    <td>{{$invoice_product->total_price}} $</td>
                 </tr>
                 @endforeach
                 <tr>
+                    <td colspan="4"><strong>Sales Tax ($)</strong></td>
+                    <td><strong>{{$invoice->sales_tax}} $</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>Freight Charges($)</strong></td>
+                    <td><strong>{{$invoice->freight_charges}} $</strong></td>
+                </tr>
+                <tr>
                     <td colspan="4"><strong>Total ($)</strong></td>
-                    <td>{{$total}}</td>
+                    <td><strong>{{$invoice->sales_tax+$invoice->freight_charges+$total}} $</strong></td>
                 </tr>
             </tbody>
         </table>

@@ -10,7 +10,7 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="fa fa-plus"></i> Product
         </button>
-@endif
+        @endif
         <!-- Modal -->
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -57,6 +57,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="text" name="price" id="price" class="form-control"
+                                    placeholder="Enter Product Price">
+                            </div>
+                            <div class="form-group">
                                 <label for="despription">Product Description</label>
                                 <textarea name="description" id="description" cols="30" rows="5" class="form-control"
                                     placeholder="Enter Product Description"></textarea>
@@ -80,6 +85,7 @@
                 width="100%">
             <div class="mt-3">
                 <h5>{{$product->name}}</h5>
+                <h5>{{$product->price}}$</h5>
                 @if(Auth::user()->user_type == 'admin')
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-product_id="{{$product->id}}"
                     data-product_name="{{$product->name}}" data-product_category="{{$product->category_id}}"
@@ -194,6 +200,11 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="text" name="price" id="price" class="form-control"
+                            placeholder="Enter Product Price">
+                    </div>
+                    <div class="form-group">
                         <label for="despription">Product Description</label>
                         <textarea name="description" id="description" cols="30" rows="5" class="form-control"
                             placeholder="Enter Product Description"></textarea>
@@ -276,6 +287,7 @@ $(document).on('click', '.edit-btn', function() {
     var product_category = $(this).data('product_category');
     var product_type = $(this).data('product_type');
     var product_sub_type = $(this).data('product_sub_type');
+    var product_price = $(this).data('product_price');
     var product_description = $(this).data('product_description');
     $.ajax({
         url: '/get-sub-type-by-type/' + product_type,
@@ -284,7 +296,7 @@ $(document).on('click', '.edit-btn', function() {
             var html = '';
             $.each(response, function(key, sub_type) {
                 html += '<option value="' + sub_type.id + '">' + sub_type.name +
-                '</option>';
+                    '</option>';
             });
             $('#editProductForm #sub_type').html(html);
             $('#editProductForm #sub_type').val(product_sub_type);
@@ -293,7 +305,6 @@ $(document).on('click', '.edit-btn', function() {
     $('#editProductForm #name').val(product_name);
     $('#editProductForm #category').val(product_category);
     $('#editProductForm #type').val(product_type);
-   
     $('#editProductForm #price').val(product_price);
     $('#editProductForm #description').val(product_description);
     $('#editProductForm').attr('action', '/edit-product/' + product_id);
@@ -308,7 +319,7 @@ $(document).on('change', '#type', function() {
             var html = '';
             $.each(response, function(key, sub_type) {
                 html += '<option value="' + sub_type.id + '">' + sub_type.name +
-                '</option>';
+                    '</option>';
             });
             $('#sub_type').html(html);
         }

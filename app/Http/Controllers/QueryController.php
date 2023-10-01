@@ -40,6 +40,8 @@ class QueryController extends Controller
         //create invoice
         $invoice = new Invoice();
         $invoice->user_id = $query->user_id;
+        $invoice->sales_tax = $request->sales_tax;
+        $invoice->freight_charges = $request->freight_charges;
         $invoice->save();
         $product_ids = $request->product_id;
         $quantities = $request->quantity;
@@ -70,22 +72,27 @@ class QueryController extends Controller
         $query_products = QueryProduct::where('query_id', $id)->get();
         $html= '';
         $count = 1;
+        $total= 0;
         foreach($query_products as $query_product)
         {
             $html .= '<tr>';
             $html .= '<td>'.$count.'</td>';
             $html .= '<td>'.$query_product->product->name.'</td>';
-            $html .= '<td>'.$query_product->product->category->name.'</td>';
-            $html .= '<td>'.$query_product->product->type->name.'</td>';
-            $html .= '<td>'.$query_product->product->sub_type->name.'</td>';
             $html .= '<td>'.$query_product->quantity.'</td>';
-            $html .= '<td><input class="form-control form-sm type="text" name="price_per_unit[]"/></td>';
-            $html .= '<td><input class="form-control form-sm type="text" name="total_price[]"/></td>';
+            $html .= '<td>'.$query_product->product->price.'$</td>';
+            $html .= '<td>'.$query_product->product->price*$query_product->quantity.'$</td>';
+            $total += $query_product->product->price*$query_product->quantity;
             $html .= '</tr>';
             $html .= '<input type="hidden" name="product_id[]" value="'.$query_product->product->id.'"/>';
             $html .= '<input type="hidden" name="quantity[]" value="'.$query_product->quantity.'"/>';
+            $html .= '<input type="hidden" name="price_per_unit[]" value="'.$query_product->product->price.'"/>';
+            $html .= '<input type="hidden" name="total_price[]" value="'.$query_product->product->price*$query_product->quantity.'"/>';
             $count++;
         }
+        $html .= '<tr>';
+        $html .= '<td colspan="4" class="text-right"><strong>Total($)</strong></td>';
+        $html .= '<td>'.$total.'$</td>';
+        $html .= '</tr>';
         return $html;
     }
 }

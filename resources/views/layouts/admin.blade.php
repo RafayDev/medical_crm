@@ -63,7 +63,9 @@
         @include('layouts.sidebar')
         <div class="content">
             @include('layouts.header')
-            @yield('content')
+            <div class="container-fluid">
+                @yield('content')
+            </div>
             @include('layouts.footer')
 
         </div>
@@ -104,4 +106,5 @@ setInterval(function() {
     get_unread_notifications();
 }, 5000);
 </script>
+
 </html>

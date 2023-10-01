@@ -62,13 +62,13 @@ class CartController extends Controller
             $notification = new Notification;
             $notification->from_user_id = $user_id;
             $notification->to_user_id = $user->id;
-            $notification->message = 'New query has been sent by '.User::find($user_id)->name;
+            $notification->message = 'New inquiry has been sent by '.User::find($user_id)->name;
             $notification->type = 'query';
             $notification->query_id = $query->id;
             
             $notification->save();
         }
 
-        return redirect()->back()->with('success', 'Query sent successfully!');
+        return redirect()->back()->with('success', 'Inquiry sent successfully!');
     }
 }

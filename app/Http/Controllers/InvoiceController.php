@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Invoice;
+use App\Models\InvoiceProduct;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -23,5 +24,41 @@ class InvoiceController extends Controller
         $data = compact('invoice');
         $pdf = PDF::loadView('pdf.invoice', $data);
         return $pdf->stream();
+    }
+    public function update(Request $request, $id)
+    {
+        $invoice = Invoice::find($id);
+        $invoice->sales_tax = $request->sales_tax;
+        $invoice->freight_charges = $request->freight_charges;
+        $invoice->save();
+        return redirect()->back()->with('success', 'Invoice updated successfully!');
+    }
+    public function get_invoice_products($id)
+    {
+        $invoice_products = InvoiceProduct::where('invoice_id', $id)->get();
+        $html= '';
+        $count = 1;
+        $total= 0;
+        foreach($invoice_products as $invoice_product)
+        {
+            $html .= '<tr>';
+            $html .= '<td>'.$count.'</td>';
+            $html .= '<td>'.$invoice_product->product->name.'</td>';
+            $html .= '<td>'.$invoice_product->quantity.'</td>';
+            $html .= '<td>'.$invoice_product->product->price.'$</td>';
+            $html .= '<td>'.$invoice_product->product->price*$invoice_product->quantity.'$</td>';
+            $total += $invoice_product->product->price*$invoice_product->quantity;
+            $html .= '</tr>';
+            $html .= '<input type="hidden" name="product_id[]" value="'.$invoice_product->product->id.'"/>';
+            $html .= '<input type="hidden" name="quantity[]" value="'.$invoice_product->quantity.'"/>';
+            $html .= '<input type="hidden" name="price_per_unit[]" value="'.$invoice_product->product->price.'"/>';
+            $html .= '<input type="hidden" name="total_price[]" value="'.$invoice_product->product->price*$invoice_product->quantity.'"/>';
+            $count++;
+        }
+        $html .= '<tr>';
+        $html .= '<td colspan="4" class="text-right"><strong>Total($)</strong></td>';
+        $html .= '<td>'.$total.'$</td>';
+        $html .= '</tr>';
+        return $html;
     }
 }

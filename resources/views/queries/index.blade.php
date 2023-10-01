@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 mt-4">
-        <h3>Queries</h3>
+        <h3>Inquiries</h3>
     </div>
 </div>
 <div class="container-fluid bg-light">
@@ -76,13 +76,10 @@
                 <input type="hidden" id="query_id" name="query_id">
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-bordered text-center">
                             <thead>
                                 <th>#</th>
-                                <th>Product Name</th>
-                                <th>Categorie</th>
-                                <th>Type</th>
-                                <th>Sub-Type</th>
+                                <th>Item Description</th>
                                 <th>Quantity</th>
                                 <th>Price per Unit ($)</th>
                                 <th>Total Price ($)</th>
@@ -90,6 +87,22 @@
                             <tbody id="products">
                             </tbody>
                         </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sales_tax">Sales Tax ($)</label>
+                                <input type="number" name="sales_tax" id="sales_tax" class="form-control"
+                                    placeholder="Enter Sales Tax" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="freight_charges">Freight Charges ($)</label>
+                                <input type="number" name="freight_charges" id="freight_charges" class="form-control"
+                                    placeholder="Enter Freight Charges" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

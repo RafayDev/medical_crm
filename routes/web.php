@@ -60,3 +60,5 @@ Route::post('/approve-query', [App\Http\Controllers\QueryController::class, 'app
 Route::get('/get-query-products/{id}', [App\Http\Controllers\QueryController::class, 'get_query_products'])->name('get-query-products');
 Route::get('/invoices',[App\Http\Controllers\InvoiceController::class, 'index'])->name('invoices');
 Route::get('/view-invoice/{id}',[App\Http\Controllers\InvoiceController::class, 'view'])->name('view-invoice');
+Route::get('/get-invoice-products/{id}', [App\Http\Controllers\InvoiceController::class, 'get_invoice_products'])->name('get-invoice-products');
+Route::post('/update-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'update'])->name('update-invoice');

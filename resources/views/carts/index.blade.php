@@ -14,6 +14,8 @@
                 <thead>
                     <th>Product</th>
                     <th>Quantity</th>
+                    <th>Price Per Unit ($)</th>
+                    <th>Total Price ($)</th>
                     <th>Action</th>
                 </thead>
                 <tbody>
@@ -22,6 +24,8 @@
                     <tr>
                         <td>{{ $cart->product->name }}</td>
                         <td>{{ $cart->quantity }}</td>
+                        <td>{{ $cart->product->price }} $</td>
+                        <td>{{ $cart->product->price * $cart->quantity }} $</td>
                         <td>
                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-cart_id="{{$cart->id}}"><i class="fa-solid fa-trash"></i></button>
                         </td>
@@ -29,7 +33,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <a href="{{route('send-query',Auth::user()->id)}}" class="btn btn-primary  mt-3 mb-4 float-right"><i class="fa-solid fa-share-from-square"></i> Send Query</a>
+            <a href="{{route('send-query',Auth::user()->id)}}" class="btn btn-primary  mt-3 mb-4 float-right"><i class="fa-solid fa-share-from-square"></i> Send Inquiry</a>
         </div>
     </div>
 </div>

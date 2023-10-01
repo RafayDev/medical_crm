@@ -12,7 +12,7 @@
             <img src="{{asset('storage/products/'.$product->image)}}" height="200px" width="100%">
             <div class="mt-2">
                 <h5>{{$product->name}}</h5>
-
+                <h5>{{$product->price}}$</h5>
                 <form action="{{route('add-to-cart')}}" method="POST">
                     @csrf
                     <input type="hidden" name="product_id" value="{{$product->id}}">

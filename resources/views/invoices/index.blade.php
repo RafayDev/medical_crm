@@ -35,7 +35,7 @@
                             <a href="{{route('view-invoice',$invoice->id)}}" class="btn btn-success btn-sm"><i
                                     class="fa-solid fa-eye"></i></a>
                                     @if($invoice->status == "pending" && auth()->user()->user_type == 'client')
-                            <a href="{{route('view-invoice',$invoice->id)}}" class="btn btn-primary btn-sm"><i class="fa-solid fa-check"></i></a>    
+                            <a href="{{route('create-order',$invoice->id)}}" class="btn btn-primary btn-sm"><i class="fa-solid fa-check"></i></a>    
                             @endif
                             @if(auth()->user()->user_type == 'admin')
                             <button data-bs-toggle="modal" data-invoice_id ="{{$invoice->id}}"

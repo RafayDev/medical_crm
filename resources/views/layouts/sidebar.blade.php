@@ -1,7 +1,7 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="{{route('home')}}" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary text-center"> ARTEMA</h3>
                     <h6 class="text-muted">Distribution Panel</h6>
                 </a>
@@ -28,6 +28,7 @@
                     <a href="/products" class="{{ (request()->is('products')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-boxes me-2"></i>All Products</a>
                     <a href="/queries" class="{{ (request()->is('queries')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-question-circle me-2"></i>Inquiries</a>
                     <a href="/invoices" class="{{ (request()->is('invoices')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Invocies</a>
+                    <a href="/orders" class="{{ (request()->is('orders')) ? 'active' : '' }} nav-item nav-link"><i class="fa-solid fa-boxes-packing me-2"></i>Tracking</a>
                 </div>
             </nav>
         </div>

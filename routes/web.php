@@ -62,3 +62,5 @@ Route::get('/invoices',[App\Http\Controllers\InvoiceController::class, 'index'])
 Route::get('/view-invoice/{id}',[App\Http\Controllers\InvoiceController::class, 'view'])->name('view-invoice');
 Route::get('/get-invoice-products/{id}', [App\Http\Controllers\InvoiceController::class, 'get_invoice_products'])->name('get-invoice-products');
 Route::post('/update-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'update'])->name('update-invoice');
+Route::get('/orders',[App\Http\Controllers\OrderController::class, 'index'])->name('orders');
+Route::get('/create-order/{invoice_id}',[App\Http\Controllers\OrderController::class, 'create'])->name('create-order');

@@ -31,10 +31,12 @@
                             <a href="{{route('view-query',$query->id)}}" class="btn btn-success btn-sm"><i
                                     class="fa-solid fa-eye"></i></a>
                             <!-- Approve  -->
-                            @if($query->status == 'pending' && auth()->user()->user_type == 'admin')
+                            @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal')
+                            @if($query->status == 'pending')
                             <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#productsModal" data-query_id="{{$query->id}}"><i
                                     class="fa-solid fa-check"></i></button>
+                            @endif
                             @endif
                         </td>
                     </tr>

@@ -32,8 +32,8 @@ class OrderController extends Controller
         $order->user_id = auth()->user()->id;
         $order->invoice_id = $invoice_id;
         $order->save();
-        //send notification to admins
-        $admins = User::where('user_type', 'admin')->get();
+        //send notification to admins and internals
+        $admins = User::where('user_type', 'admin')->orWhere('user_type', 'internal')->get();
         foreach($admins as $admin)
         {
           $notification = new Notification();
@@ -44,5 +44,21 @@ class OrderController extends Controller
           $notification->save();
         }
         return redirect()->back()->with('success', 'Order Created Successfully');
+    }
+    public function change_order_status(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->status = $request->status;
+        $order->tracking_no = $request->tracking_no;
+        $order->courier = $request->courier;
+        $order->save();
+        //send notification to client
+        $notification = new Notification();
+        $notification->from_user_id = auth()->user()->id;
+        $notification->to_user_id = $order->user_id;
+        $notification->type = 'order';
+        $notification->message = 'Your order status has been changed to '.$request->status.' Invoive No. is AML-'.$order->invoice_id;
+        $notification->save();
+        return redirect()->back()->with('success', 'Order Status Changed Successfully');
     }
 }

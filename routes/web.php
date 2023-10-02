@@ -64,3 +64,9 @@ Route::get('/get-invoice-products/{id}', [App\Http\Controllers\InvoiceController
 Route::post('/update-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'update'])->name('update-invoice');
 Route::get('/orders',[App\Http\Controllers\OrderController::class, 'index'])->name('orders');
 Route::get('/create-order/{invoice_id}',[App\Http\Controllers\OrderController::class, 'create'])->name('create-order');
+Route::post('/change-order-status',[App\Http\Controllers\OrderController::class, 'change_order_status'])->name('change-order-status');
+//internals crud
+Route::get('/internals',[App\Http\Controllers\InternalController::class, 'index'])->name('internals');
+Route::post('/add-internal',[App\Http\Controllers\InternalController::class, 'create'])->name('add-internal');
+Route::get('/delete-internal/{id}',[App\Http\Controllers\InternalController::class, 'delete'])->name('delete-internal');
+Route::post('/update-internal/{id}',[App\Http\Controllers\InternalController::class, 'update'])->name('update-internal');

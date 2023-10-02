@@ -5,9 +5,12 @@
         <h3>Sub Types</h3>
     </div>
     <div class="col-md-2 mt-2">
+        <!-- Button trigger modal -->
+        @if(auth()->user()->user_type == 'admin')
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="fa fa-plus"></i> Sub-Type
         </button>
+        @endif  
 
         <!-- Modal -->
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,6 +68,7 @@
                         <td>{{$sub_type->type->name}}</td>
                         <td>{{$sub_type->name}}</td>
                         <td>
+                            @if(Auth::user()->user_type == 'admin')
                             <button class="btn btn-square btn-primary  edit-btn" type="button"
                                 data-type_id="{{$sub_type->type_id}}" data-sub_type_id="{{$sub_type->id}}"
                                 data-sub_type_name="{{$sub_type->name}}" data-bs-toggle="modal"
@@ -72,6 +76,7 @@
                             <button class="btn btn-square btn-danger delete-btn" type="button"
                                 data-sub_type_id="{{$sub_type->id}}" data-bs-toggle="modal"
                                 data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

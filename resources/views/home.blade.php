@@ -1,269 +1,177 @@
 @extends('layouts.admin')
-
 @section('content')
-            <!-- Sale & Revenue Start -->
-            
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-area fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
-                            </div>
-                        </div>
-                    </div>
+<style>
+    .custom-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s;
+        background: #f0f0f0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .custom-card .card-body {
+        position: relative;
+    }
+
+    .custom-card a {
+        color: #333;
+        font-weight: 600;
+    }
+
+    .custom-card i {
+        font-size: 4em;
+        color: #FF6B6B;
+        transition: color 0.3s;
+    }
+
+    .custom-card:hover i {
+        color: #FF8E8E;
+    }
+
+    .active-link {
+        color: #FF6B6B !important;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+
+        <!-- Dashboard Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa fa-tachometer-alt mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/home" class="{{ (request()->is('home')) ? 'active-link' : '' }} text-decoration-none">
+                            Dashboard
+                        </a>
+                    </h5>
                 </div>
             </div>
-            <!-- Sale & Revenue End -->
+        </div>
 
-
-            <!-- Sales Chart Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Worldwide Sales</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <canvas id="worldwide-sales"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Salse & Revenue</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <canvas id="salse-revenue"></canvas>
-                        </div>
-                    </div>
+        @if(Auth::user()->user_type == 'admin')
+        <!-- Clients Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa fa-users mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/clients" class="{{ (request()->is('clients')) ? 'active-link' : '' }} text-decoration-none">
+                            Clients
+                        </a>
+                    </h5>
                 </div>
             </div>
-            <!-- Sales Chart End -->
+        </div>
+        @endif
 
-
-            <!-- Recent Sales Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Recent Salse</h6>
-                        <a href="">Show All</a>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-dark">
-                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Invoice</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+        <!-- Categories Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa fa-bars mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/catagories" class="{{ (request()->is('catagories')) ? 'active-link' : '' }} text-decoration-none">
+                            Categories
+                        </a>
+                    </h5>
                 </div>
             </div>
-            <!-- Recent Sales End -->
+        </div>
 
-
-            <!-- Widgets Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <h6 class="mb-0">Messages</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-3">
-                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Jhon Doe</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Calender</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div id="calender"></div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">To Do List</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
-                                <button type="button" class="btn btn-primary ms-2">Add</button>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox" checked>
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><del>Short task goes here...</del></span>
-                                        <button class="btn btn-sm text-primary"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        @if(Auth::user()->user_type == 'admin')
+        <!-- Types Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa fa-toolbox mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/types" class="{{ (request()->is('types')) ? 'active-link' : '' }} text-decoration-none">
+                            Types
+                        </a>
+                    </h5>
                 </div>
             </div>
-            <!-- Widgets End -->
+        </div>
+
+        <!-- Sub-Types Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa fa-toolbox mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/sub-types" class="{{ (request()->is('sub-types')) ? 'active-link' : '' }} text-decoration-none">
+                            Sub-Types
+                        </a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        <!-- Products Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa fa-boxes mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/products" class="{{ (request()->is('products')) ? 'active-link' : '' }} text-decoration-none">
+                            All Products
+                        </a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inquiries Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa fa-question-circle mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/queries" class="{{ (request()->is('queries')) ? 'active-link' : '' }} text-decoration-none">
+                            Inquiries
+                        </a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoices Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa fa-file-invoice-dollar mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/invoices" class="{{ (request()->is('invoices')) ? 'active-link' : '' }} text-decoration-none">
+                            Invoices
+                        </a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracking Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card shadow-lg h-100">
+                <div class="card-body text-center py-5">
+                    <i class="fa-solid fa-boxes-packing mb-3"></i>
+                    <h5 class="card-title mt-3">
+                        <a href="/orders" class="{{ (request()->is('orders')) ? 'active-link' : '' }} text-decoration-none">
+                            Tracking
+                        </a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection

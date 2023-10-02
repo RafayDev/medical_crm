@@ -37,7 +37,7 @@
                                     @if($invoice->status == "pending" && auth()->user()->user_type == 'client')
                             <a href="{{route('create-order',$invoice->id)}}" class="btn btn-primary btn-sm"><i class="fa-solid fa-check"></i></a>    
                             @endif
-                            @if(auth()->user()->user_type == 'admin')
+                            @if(auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'internal')
                             <button data-bs-toggle="modal" data-invoice_id ="{{$invoice->id}}"
                             data-invoice_sales_tax ="{{$invoice->sales_tax}}"
                             data-invoice_freight_charges ="{{$invoice->freight_charges}}"

@@ -19,9 +19,10 @@
                     <a href="/home" class ="{{ (request()->is('home')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     @if(Auth::user()->user_type == 'admin')
                     <a href="/clients" class="{{ (request()->is('clients')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-users me-2"></i>Clients</a>
+                    <a href="/internals" class="{{ (request()->is('internals')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-users me-2"></i>Internals</a>
                     @endif
                     <a href="/catagories" class="{{ (request()->is('catagories')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-bars me-2"></i>Catagories</a>
-                    @if(Auth::user()->user_type == 'admin')
+                    @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal')
                     <a href="/types" class="{{ (request()->is('types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Types</a>
                     <a href="/sub-types" class="{{ (request()->is('sub-types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Sub Types</a>
                     @endif

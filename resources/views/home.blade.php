@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        @if(Auth::user()->user_type == 'admin')
+        @if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'internal')
         <!-- Types Card -->
         <div class="col-md-4 mb-4">
             <div class="card custom-card shadow-lg h-100">

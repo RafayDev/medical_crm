@@ -6,7 +6,7 @@
     </div>
     <div class="col-md-2 mt-3">
         <!-- Button trigger modal -->
-        @if(auth()->user()->role == 'admin')
+        @if(auth()->user()->user_type == 'admin')
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="fa fa-plus"></i> Type
         </button>
@@ -51,7 +51,7 @@
             <img src="{{asset('storage/types/'.$type->image)}}" alt="{{$type->name}}" height = "100px" width = "100%">
             <div class="box-body">
                 <h5>{{$type->name}}</h5>
-                @if(auth()->user()->role == 'admin')
+                @if(auth()->user()->user_type == 'admin')
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-type_id="{{$type->id}}"
                 data-type_name = "{{$type->name}}"
                 data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa fa-edit"></i></button>

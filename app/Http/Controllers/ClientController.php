@@ -60,7 +60,7 @@ class ClientController extends Controller
             $user_category->category_id = $category;
             $user_category->save();
         }
-        return redirect()->route('clients');
+        return redirect()->route('clients')->with('success', 'Client Create Successfully');
     }
     public function delete($id)
     {
@@ -73,7 +73,7 @@ class ClientController extends Controller
         {
             $category->delete();
         }
-        return redirect()->route('clients');
+        return redirect()->route('clients')->with('success', 'Client Delete Successfully');
     }
     public function update(Request $request, $id)
     {
@@ -112,6 +112,6 @@ class ClientController extends Controller
             $user_category->save();
         }
     }
-        return redirect()->route('clients');
+        return redirect()->route('clients')->with('success', 'Client Update Successfully');
     }
 }

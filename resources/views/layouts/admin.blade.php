@@ -61,6 +61,7 @@
         </div>
         <!-- Spinner End -->
         @include('layouts.sidebar')
+        @include('toastr')
         <div class="content">
             @include('layouts.header')
             <div class="container-fluid">

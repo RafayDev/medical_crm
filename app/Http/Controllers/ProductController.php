@@ -58,7 +58,7 @@ class ProductController extends Controller
         }
         $product->save();
         
-        return redirect()->back()->with('message', 'Product Added Successfully');
+        return redirect()->back()->with('success', 'Product Added Successfully');
     }
     public function delete($id)
     {

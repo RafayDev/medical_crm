@@ -46,13 +46,13 @@ class InternalController extends Controller
         $user->password = Hash::make($request->password);
         $user->user_type = 'internal';
         $user->save();
-        return redirect()->route('internals');
+        return redirect()->route('internals')->with('success', 'Internal created successfully.');
     }
     public function delete($id)
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('internals');
+        return redirect()->route('internals')->with('success', 'Internal deleted successfully.');
     }
     public function update(Request $request, $id)
     {
@@ -65,6 +65,6 @@ class InternalController extends Controller
         }
         $user->user_type = 'internal';
         $user->save();
-        return redirect()->route('internals');
+        return redirect()->route('internals')->with('success', 'Internal updated successfully.');
     }
 }

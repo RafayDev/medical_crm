@@ -28,7 +28,7 @@ class NotificationController extends Controller
         }
         if($notification_count > 0)
         {
-            $html .= '<a href="'.route('mark-as-read').'" class="dropdown-item text-center">Mark all as read</a>';
+            $html .= '<a id="mark-as-read" class="dropdown-item text-center">Mark all as read</a>';
         }
         else{
             $html .= '<a href="#" class="dropdown-item text-center">No new notifications</a>';
@@ -39,6 +39,6 @@ class NotificationController extends Controller
     public function mark_as_read()
     {
         Notification::where('to_user_id', Auth::user()->id)->where('is_read', 0)->update(['is_read' => 1]);
-        return redirect()->back();
+        return response()->json(['success' => 'success']);
     }
 }

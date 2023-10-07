@@ -61,10 +61,10 @@
         </div>
         <!-- Spinner End -->
         @include('layouts.sidebar')
-        @include('toastr')
         <div class="content">
             @include('layouts.header')
             <div class="container-fluid">
+                @include('toastr')
                 @yield('content')
             </div>
             @include('layouts.footer')
@@ -74,7 +74,7 @@
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('frontend/lib/chart/chart.min.js')}}"></script>
@@ -91,21 +91,55 @@
 @yield('scripts')
 <script>
 //get unread notifications
+// Check if the lastNotificationCount is in localStorage or initialize to 0
+let lastNotificationCount = localStorage.getItem('lastNotificationCount') || 0;
+
+//get unread notifications
 function get_unread_notifications() {
     $.ajax({
         url: "{{route('notifications')}}",
         type: "GET",
         success: function(response) {
             $('#notification-list').html(response.html);
+            
+            // Extract the new notification count from the response
+            let newNotificationCount = parseInt($(response.notification_count).text());
+
+            if (newNotificationCount > lastNotificationCount) {
+                // There are new notifications, show the toast
+                toastr.info('You have ' + newNotificationCount + ' new notifications');
+                
+                // Update the lastNotificationCount in both the variable and localStorage
+                lastNotificationCount = newNotificationCount;
+                localStorage.setItem('lastNotificationCount', lastNotificationCount);
+            }
+
             $('#notification-count').html(response.notification_count);
         }
     });
 }
+
 get_unread_notifications();
-// call every 5 seconds
 setInterval(function() {
     get_unread_notifications();
 }, 5000);
+// Assuming you have a button/link with the id 'mark-as-read'
+$(document).on('click', '#mark-as-read', function(e) {
+    e.preventDefault();  // prevent default action if it's a link or submit button
+    // Make an AJAX call to mark all as read
+    $.ajax({
+        url: "{{ route('mark-as-read') }}",  // Adjust this to your actual route
+        type: "Get",  // Or whatever your method is
+        success: function(response) {
+            // Update the lastNotificationCount in both the variable and localStorage
+            lastNotificationCount = 0;
+            localStorage.setItem('lastNotificationCount', 0);
+            get_unread_notifications();
+        }
+    });
+    
+});
+
 </script>
 
 </html>

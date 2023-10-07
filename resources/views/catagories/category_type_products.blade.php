@@ -9,7 +9,7 @@
     @foreach($products as $product)
     <div class="col-md-3">
         <div class="box bg-light">
-            <img src="{{asset('storage/products/'.$product->image)}}" height="200px" width="100%">
+            <img src="{{asset('storage/products/'.$product->image)}}" height="400px" width="100%">
             <div class="mt-2">
                 <h5>{{$product->name}}</h5>
                 <h5>{{$product->price}}$</h5>

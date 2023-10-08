@@ -20,7 +20,11 @@
                     @foreach($invoices as $invoice)
                     <tr>
                         <td>{{$loop->iteration}}</td>
+                        @if(!empty($invoice->user->name))
                         <td>{{$invoice->user->name}}</td>
+                        @else
+                        <td>Client Deleted</td>
+                        @endif
                         <td>{{$invoice->created_at->format('d-m-Y')}}</td>
                         <td>
                             @if($invoice->status == "pending")

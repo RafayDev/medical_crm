@@ -199,7 +199,11 @@ a {
                 @foreach($orders as $order)
                 <tr>
                     <td>AML-{{$order->invoice->id}}</td>
+                    @if(!empty($order->invoice->user->name))
                     <td>{{$order->invoice->user->name}}</td>
+                    @else
+                    <td>Client Deleted</td>
+                    @endif
                     <td>{{$order->created_at->format('d-m-Y')}}</td>
                     <td>
                         @if($order->status == 'in-process')

@@ -20,7 +20,11 @@
                     @foreach($queries as $query)
                     <tr>
                         <td>{{$loop->iteration}}</td>
+                        @if(!empty($query->user->name))
                         <td>{{$query->user->name}}</td>
+                        @else
+                        <td>Client Deleted</td>
+                        @endif
                         @if($query->status == 'pending')
                         <td><span class="badge bg-warning text-dark">Pending</span></td>
                         @elseif($query->status == 'approved')

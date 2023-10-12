@@ -57,8 +57,8 @@
                 <button class="btn btn-square btn-danger m-2 delete-btn" type="button"
                     data-category_id="{{$category->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
                         class="fa fa-trash"></i></button>
-                <a href="{{route('assigned-types', $category->id)}}" class="btn btn-square btn-success m-2"><i
-                        class="fa fa-plus"></i></a> 
+                <!-- <a href="{{route('assigned-types', $category->id)}}" class="btn btn-square btn-success m-2"><i
+                        class="fa fa-plus"></i></a>  -->
                 @endif
             </div>
             <!-- <a href="#" class="btn btn-sm btn-primary">Edit</a>

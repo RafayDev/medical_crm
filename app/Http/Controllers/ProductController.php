@@ -47,7 +47,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->category_id = $request->category;
         $product->type_id = $request->type;
-        $product->sub_type_id = $request->sub_type;
+        $product->sku = $request->sku;
         $product->price = $request->price;
         $product->description = $request->description;
         if ($request->hasFile('image')) {
@@ -78,7 +78,7 @@ class ProductController extends Controller
         }
         $product->category_id = $request->category;
         $product->type_id = $request->type;
-        $product->sub_type_id = $request->sub_type;
+        $product->sku = $request->sku;
         $product->price = $request->price;
         $product->description = $request->description;
         $product->save();

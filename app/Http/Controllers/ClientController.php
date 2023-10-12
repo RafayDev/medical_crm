@@ -40,6 +40,10 @@ class ClientController extends Controller
         // print_r($request->all());
         // echo '</pre>';
         // die;
+        if($request->category[0] == "Choose...")
+        {
+            return redirect()->route('clients')->with('error', 'Please Select Category');
+        }
         $company = new Company();
         $company->name = $request->company_name;
         $company->address = $request->client_address;
@@ -51,6 +55,13 @@ class ClientController extends Controller
         $user->user_type = 'client';
         $user-> company_id = $company->id;
         $user->phone = $request->client_phone;
+        //add logo of user
+        if ($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $image_name = time(). '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/logos', $image_name);
+            $user->logo = $image_name;
+        }
         $user->save();
         $categories = $request->category;
         foreach($categories as $category)
@@ -96,6 +107,12 @@ class ClientController extends Controller
         $user->user_type = 'client';
         $user-> company_id = $company->id;
         $user->phone = $request->client_phone;
+        if ($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $image_name = time(). '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/logos', $image_name);
+            $user->logo = $image_name;
+        }
         $user->save();
         foreach($categories as $category)
         {

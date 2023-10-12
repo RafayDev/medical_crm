@@ -25,17 +25,17 @@
                             <div class="form-group">
                                 <label for="client_name">Name</label>
                                 <input type="text" class="form-control" id="client_name" name="client_name"
-                                    placeholder="Enter Client Name">
+                                    placeholder="Enter Client Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="client_email">Email</label>
                                 <input type="email" class="form-control" id="client_email" name="client_email"
-                                    placeholder="Enter Email">
+                                    placeholder="Enter Email" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="text" class="form-control" id="password" name="password"
-                                    placeholder="Enter Password">
+                                    placeholder="Enter Password" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -111,17 +111,17 @@
                         <div class="form-group">
                             <label for="client_name">Name</label>
                             <input type="text" class="form-control" id="client_name" name="client_name"
-                                placeholder="Enter Client Name">
+                                placeholder="Enter Client Name" required>
                         </div>
                         <div class="form-group">
                             <label for="client_email">Email</label>
                             <input type="email" class="form-control" id="client_email" name="client_email"
-                                placeholder="Enter Email">
+                                placeholder="Enter Email" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="text" class="form-control" id="password" name="password"
-                                placeholder="Enter Password">
+                                placeholder="Enter Password" required>
                         </div>
                     </div>
                     <div class="modal-footer">

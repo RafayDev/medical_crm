@@ -2,8 +2,19 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="{{route('home')}}" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary text-center"> ARTEMA</h3>
-                    <h6 class="text-muted">Distribution Panel</h6>
+                    
+                    <!-- image in span -->
+                    <!-- <span> -->
+                        @if(Auth::user()->user_type == 'client')
+                        <img src="{{asset('storage/logos/'.Auth::user()->logo)}}" alt=""
+                        style = "width: 100%; height: 100%;">
+                        @else
+                        <img src="{{asset('frontend/img/logo.png')}}" alt=""
+                        style = "width: 100%; height: 100%;">
+                        @endif
+                        <!-- <h3 class="text-primary text-center"> ARTEMA</h3> -->
+                        <!-- <h6 class="text-muted text-center">Distributor Panel</h6> -->
+                    <!-- </span> -->
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -23,8 +34,8 @@
                     @endif
                     <a href="/catagories" class="{{ (request()->is('catagories')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-bars me-2"></i>Catagories</a>
                     @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal')
-                    <a href="/types" class="{{ (request()->is('types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Types</a>
-                    <a href="/sub-types" class="{{ (request()->is('sub-types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Sub Types</a>
+                    <a href="/types" class="{{ (request()->is('types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Sub Category</a>
+                    <!-- <a href="/sub-types" class="{{ (request()->is('sub-types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Sub Types</a> -->
                     @endif
                     <a href="/products" class="{{ (request()->is('products')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-boxes me-2"></i>All Products</a>
                     <a href="/queries" class="{{ (request()->is('queries')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-question-circle me-2"></i>Inquiries</a>

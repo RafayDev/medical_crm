@@ -103,14 +103,14 @@
                     <div class="card-body text-center py-5">
                         <i class="fa fa-toolbox mb-3"></i>
                         <h5 class="card-title mt-3">
-                            Types
+                            Sub Categories
                         </h5>
                     </div>
                 </div>
             </a>
         </div>
 
-        <!-- Sub-Types Card -->
+        <!-- Sub-Types Card
         <div class="col-md-4 mb-4">
             <a href="/sub-types" class="{{ (request()->is('sub-types')) ? 'active-link' : '' }} text-decoration-none card-link">
                 <div class="card custom-card shadow-lg h-100">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </a>
-        </div>
+        </div> -->
         @endif
 
         <!-- Products Card -->

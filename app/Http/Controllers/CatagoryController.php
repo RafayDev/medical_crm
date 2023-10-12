@@ -111,7 +111,7 @@ class CatagoryController extends Controller
     public function category_types($id)
     {
         $category = Category::find($id);
-        $category_types = CategoryType::where('category_id', $id)->get()->unique('type_id');
+        $category_types = Type::where('category_id', $id)->get();
         $data = compact('category', 'category_types');
         return view('catagories.category_types')->with($data);
     }
@@ -119,10 +119,13 @@ class CatagoryController extends Controller
     {
         $category = Category::find($category_id);
         $type = Type::find($type_id);
-        $category_types = CategoryType::with('product')->where('category_id', $category_id)->where('type_id', $type_id)->get();
-        $subTypeIds = $category_types->pluck('sub_type_id')->unique()->toArray();
-        $products = Product::whereIn('sub_type_id', $subTypeIds)->get();
+        $products = Product::where('category_id', $category_id)->where('type_id', $type_id)->get();
         $data = compact('category', 'type', 'products');
         return view('catagories.category_type_products')->with($data);
+    }
+    public function get_type_by_category($id)
+    {
+        $types = Type::where('category_id', $id)->get();
+        return response()->json($types);
     }
 }

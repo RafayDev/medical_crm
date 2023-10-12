@@ -70,3 +70,5 @@ Route::get('/internals',[App\Http\Controllers\InternalController::class, 'index'
 Route::post('/add-internal',[App\Http\Controllers\InternalController::class, 'create'])->name('add-internal');
 Route::get('/delete-internal/{id}',[App\Http\Controllers\InternalController::class, 'delete'])->name('delete-internal');
 Route::post('/update-internal/{id}',[App\Http\Controllers\InternalController::class, 'update'])->name('update-internal');
+//get-type-by-category
+Route::get('/get-type-by-category/{id}',[App\Http\Controllers\CatagoryController::class, 'get_type_by_category'])->name('get-type-by-category');

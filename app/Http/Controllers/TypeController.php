@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Type;
+use App\Models\Category;
 use Illuminate\Support\Str;
 
 
@@ -27,7 +28,8 @@ class TypeController extends Controller
     public function index()
     {
         $types = Type::all();
-        $data = compact('types');
+        $categories = Category::all();
+        $data = compact('types','categories');
         return view('types.index')->with($data);
     }
     public function create(Request $request)
@@ -43,6 +45,7 @@ class TypeController extends Controller
         $type->name = $request->name;
         $type->slug = Str::slug($request->name, '-');
         $type->image = $imageName;
+        $type->category_id = $request->category;
         $type->save();
         return redirect()->back()->with('success', 'type Added Successfully');
     }
@@ -67,6 +70,7 @@ class TypeController extends Controller
             $request->image->storeAs('public/categories', $imageName);
             $type->image = $imageName;
         }
+        $type->category_id = $request->category;
         $type->save();
         return redirect()->back()->with('success', 'type Updated Successfully');
     }

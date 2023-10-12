@@ -19,33 +19,38 @@
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Add Client</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{route('add-client')}}" method="POST" id="addClientForm">
+                    <form action="{{route('add-client')}}" method="POST" enctype="multipart/form-data" id="addClientForm">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
+                                <label for="logo">Logo</label>
+                                <input type="file" class="form-control" id="logo" name="logo"
+                                    placeholder="Enter Logo" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="client_name">Client Name</label>
                                 <input type="text" class="form-control" id="client_name" name="client_name"
-                                    placeholder="Enter Client Name">
+                                    placeholder="Enter Client Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="company_name">Company Name</label>
                                 <input type="text" class="form-control" id="company_name" name="company_name"
-                                    placeholder="Enter Company Name">
+                                    placeholder="Enter Company Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="client_email">Email</label>
                                 <input type="email" class="form-control" id="client_email" name="client_email"
-                                    placeholder="Enter Email">
+                                    placeholder="Enter Email" required>
                             </div>
                             <div class="form-group">
                                 <label for="client_phone">Client Phone</label>
                                 <input type="text" class="form-control" id="client_phone" name="client_phone"
-                                    placeholder="Enter Phone">
+                                    placeholder="Enter Phone" required>
                             </div>
                             <div class="form-group">
                                 <label for="client_address">Address</label>
                                 <textarea class="form-control" id="client_address" name="client_address"
-                                    placeholder="Enter Address"></textarea>
+                                    placeholder="Enter Address" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Categories</label>
@@ -55,7 +60,7 @@
                                             <button class="btn btn-outline-success" id="add_category"
                                                 type="button">+</button>
                                         </div>
-                                        <select id="category" name="category[]" class="form-select">
+                                        <select id="category" name="category[]" class="form-select" required>
                                             <option selected>Choose...</option>
                                             @foreach($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
@@ -67,7 +72,7 @@
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="text" class="form-control" id="password" name="password"
-                                    placeholder="Enter Password">
+                                    placeholder="Enter Password" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -86,6 +91,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>Logo</th>
                         <th>Client Name</th>
                         <th>Company Name </th>
                         <th>Email</th>
@@ -96,6 +102,7 @@
                 <tbody>
                     @foreach($clients as $client)
                     <tr>
+                        <td><img src="{{asset('storage/logos/'.$client->logo)}}" alt="" width="50px"></td>
                         <td>{{$client->name}}</td>
                         <td>{{$client->company->name}}</td>
                         <td>{{$client->email}}</td>
@@ -144,31 +151,36 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Client</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Client</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="{{route('add-client')}}" method="POST" id="updateClientForm">
                         @csrf
                         <div class="modal-body">
+                        <div class="form-group">
+                                <label for="logo">Logo</label>
+                                <input type="file" class="form-control" id="logo" name="logo"
+                                    placeholder="Enter Logo" required>
+                            </div>
                             <div class="form-group">
                                 <label for="client_name">Client Name</label>
                                 <input type="text" class="form-control" id="client_name" name="client_name"
-                                    placeholder="Enter Client Name">
+                                    placeholder="Enter Client Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="company_name">Company Name</label>
                                 <input type="text" class="form-control" id="company_name" name="company_name"
-                                    placeholder="Enter Company Name">
+                                    placeholder="Enter Company Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="client_email">Email</label>
                                 <input type="email" class="form-control" id="client_email" name="client_email"
-                                    placeholder="Enter Email">
+                                    placeholder="Enter Email" required>
                             </div>
                             <div class="form-group">
                                 <label for="client_phone">Client Phone</label>
                                 <input type="text" class="form-control" id="client_phone" name="client_phone"
-                                    placeholder="Enter Phone">
+                                    placeholder="Enter Phone" required>
                             </div>
                             <div class="form-group">
                                 <label for="client_address">Address</label>
@@ -209,7 +221,7 @@
             $('#modal-delete-btn').attr('href', '/delete-client/' + client_id);
         });
         $('#add_category').click(function(){
-            $('#categories').append('<div class="input-group mb-3"><div class="input-group-prepend"><button class="btn btn-outline-danger remove_category" type="button">-</button></div><select id="category" name="category[]" class="form-select"><option selected>Choose...</option>@foreach($categories as $category)<option value="{{$category->id}}">{{$category->name}}</option>@endforeach</select></div>');
+            $('#categories').append('<div class="input-group mb-3"><div class="input-group-prepend"><button class="btn btn-outline-danger remove_category" type="button">-</button></div><select id="category" name="category[]" class="form-select" required><option selected>Choose...</option>@foreach($categories as $category)<option value="{{$category->id}}">{{$category->name}}</option>@endforeach</select></div>');
         });
         $(document).on('click', '.remove_category', function(){
             $(this).closest('.input-group').remove();
@@ -233,7 +245,7 @@
     var appendStr = '<div class="input-group mb-3">';
     appendStr += '<div class="input-group-prepend">';
     appendStr += '<button class="btn btn-outline-danger remove_category" type="button">-</button></div>';
-    appendStr += '<select id="category" name="category[]" class="form-select">';
+    appendStr += '<select id="category" name="category[]" class="form-select" required>';
     appendStr += '<option>Choose...</option>';
 
     @foreach($categories as $category)
@@ -250,7 +262,7 @@
 });
         });
         $('#add_category_update').click(function(){
-            $('#Upadate_categories').append('<div class="input-group mb-3"><div class="input-group-prepend"><button class="btn btn-outline-danger remove_category" type="button">-</button></div><select id="category" name="category[]" class="form-select"><option selected>Choose...</option>@foreach($categories as $category)<option value="{{$category->id}}">{{$category->name}}</option>@endforeach</select></div>');
+            $('#Upadate_categories').append('<div class="input-group mb-3"><div class="input-group-prepend"><button class="btn btn-outline-danger remove_category" type="button">-</button></div><select id="category" name="category[]" class="form-select" required><option selected>Choose...</option>@foreach($categories as $category)<option value="{{$category->id}}">{{$category->name}}</option>@endforeach</select></div>');
         });       
     });
     </script>

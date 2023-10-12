@@ -32,6 +32,11 @@
                                 <input type="text" name="name" id="name" class="form-control"
                                     placeholder="Enter Product Name">
                             </div>
+                            <div class="form-grouo">
+                                <label for="sku">Product Sku</label>
+                                <input type="text" name="sku" id="sku" class="form-control"
+                                    placeholder="Enter Product Sku">
+                            </div>
                             <div class="form-group">
                                 <label for="category">Product Catagory</label>
                                 <select name="category" id="category" class="form-control">
@@ -42,18 +47,9 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="type">Product Type</label>
+                                <label for="type">Product Sub Category</label>
                                 <select name="type" id="type" class="form-control">
-                                    <option value="">Select Type</option>
-                                    @foreach ($types as $type)
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="sub_type">Product Sub Type</label>
-                                <select name="sub_type" id="sub_type" class="form-control">
-                                    <option value="">Select Sub Type</option>
+                                    <option value="">Select Sub Category</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -80,17 +76,18 @@
 <div class="row mt-3">
     @foreach($products as $product)
     <div class="col-md-3">
-        <div class="box bg-light">
-            <img src="{{asset('storage/products/'.$product->image)}}" alt="{{$product->name}}" height="400px"
-                width="100%">
-            <div class="mt-3">
+        <div class="text-center">
+            <img src="{{asset('storage/products/'.$product->image)}}" alt="{{$product->name}}"
+                style="object-fit: contain; height: 300px;  width: 200px;">
+            <div class="mt-3 text-left">
                 <h5>{{$product->name}}</h5>
+                <h6>{{$product->sku}}</h6>
                 <h5>{{$product->price}}$</h5>
                 @if(Auth::user()->user_type == 'admin')
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-product_id="{{$product->id}}"
                     data-product_name="{{$product->name}}" data-product_category="{{$product->category_id}}"
                     data-product_type="{{$product->type_id}}" data-product_price="{{$product->price}}"
-                    data-product_sub_type="{{$product->sub_type_id}}"
+                    data-product_sku = "{{$product->sku}}"
                     data-product_description="{{$product->description}}" data-bs-toggle="modal"
                     data-bs-target="#editModal"><i class="fa fa-edit"></i></button>
                 <button class="btn btn-square btn-danger m-2 delete-btn" type="button"
@@ -131,6 +128,7 @@
                 </form>
                 @endif
             </div>
+
             <!-- <a href="#" class="btn btn-sm btn-primary">Edit</a>
                 <a href="#" class="btn btn-sm btn-danger">Delete</a> -->
         </div>
@@ -175,6 +173,10 @@
                         <label for="name">Product Name</label>
                         <input type="text" name="name" id="name" class="form-control" placeholder="Enter Product Name">
                     </div>
+                    <div class="form-grouo">
+                        <label for="sku">Product Sku</label>
+                        <input type="text" name="sku" id="sku" class="form-control" placeholder="Enter Product Sku">
+                    </div>
                     <div class="form-group">
                         <label for="category">Product Catagory</label>
                         <select name="category" id="category" class="form-control">
@@ -185,18 +187,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="type">Product Type</label>
+                        <label for="type">Product Sub Category</label>
                         <select name="type" id="type" class="form-control">
-                            <option value="">Select Type</option>
-                            @foreach ($types as $type)
-                            <option value="{{$type->id}}">{{$type->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="sub_type">Product Sub Type</label>
-                        <select name="sub_type" id="sub_type" class="form-control">
-                            <option value="">Select Sub Type</option>
+                            <option value="">Select Sub Category</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -240,6 +233,12 @@ $(document).ready(function() {
             type: {
                 required: true
             },
+            sku: {
+                required: true
+            },
+            price: {
+                required: true
+            },
             description: {
                 required: true,
                 minlength: 3,
@@ -261,6 +260,12 @@ $(document).ready(function() {
             },
             type: {
                 required: 'Please select product type'
+            },
+            sku: {
+                required: 'Please enter product sku'
+            },
+            price: {
+                required: 'Please enter product price'
             },
             description: {
                 required: 'Please enter product description',
@@ -285,45 +290,60 @@ $(document).on('click', '.edit-btn', function() {
     var product_id = $(this).data('product_id');
     var product_name = $(this).data('product_name');
     var product_category = $(this).data('product_category');
-    var product_type = $(this).data('product_type');
-    var product_sub_type = $(this).data('product_sub_type');
-    var product_price = $(this).data('product_price');
-    var product_description = $(this).data('product_description');
     $.ajax({
-        url: '/get-sub-type-by-type/' + product_type,
+        url: '/get-type-by-category/' + product_category,
         method: 'GET',
         success: function(response) {
             var html = '';
-            $.each(response, function(key, sub_type) {
-                html += '<option value="' + sub_type.id + '">' + sub_type.name +
+            $.each(response, function(key, type) {
+                html += '<option value="' + type.id + '">' + type.name +
                     '</option>';
             });
-            $('#editProductForm #sub_type').html(html);
-            $('#editProductForm #sub_type').val(product_sub_type);
+            $('#editProductForm #type').html(html);
+            var product_type = $('#editProductForm #type').val();
         }
     });
+    var product_sku = $(this).data('product_sku');
+    var product_price = $(this).data('product_price');
+    var product_description = $(this).data('product_description');
     $('#editProductForm #name').val(product_name);
     $('#editProductForm #category').val(product_category);
     $('#editProductForm #type').val(product_type);
+    $('#editProductForm #sku').val(product_sku);
     $('#editProductForm #price').val(product_price);
     $('#editProductForm #description').val(product_description);
     $('#editProductForm').attr('action', '/edit-product/' + product_id);
 });
-//get sub types by type
-$(document).on('change', '#type', function() {
-    var type_id = $(this).val();
+$(document).on('change', '#category', function() {
+    var category_id = $(this).val();
     $.ajax({
-        url: '/get-sub-type-by-type/' + type_id,
+        url: '/get-type-by-category/' + category_id,
         method: 'GET',
         success: function(response) {
             var html = '';
-            $.each(response, function(key, sub_type) {
-                html += '<option value="' + sub_type.id + '">' + sub_type.name +
+            $.each(response, function(key, type) {
+                html += '<option value="' + type.id + '">' + type.name +
                     '</option>';
             });
-            $('#sub_type').html(html);
+            $('#type').html(html);
         }
     });
 });
+//get sub types by type
+// $(document).on('change', '#type', function() {
+//     var type_id = $(this).val();
+//     $.ajax({
+//         url: '/get-sub-type-by-type/' + type_id,
+//         method: 'GET',
+//         success: function(response) {
+//             var html = '';
+//             $.each(response, function(key, sub_type) {
+//                 html += '<option value="' + sub_type.id + '">' + sub_type.name +
+//                     '</option>';
+//             });
+//             $('#sub_type').html(html);
+//         }
+//     });
+// });
 </script>
 @endsection

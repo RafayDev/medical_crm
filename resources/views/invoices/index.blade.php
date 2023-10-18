@@ -14,6 +14,7 @@
                     <th>Client Name</th>
                     <th>invoice Date</th>
                     <th>Status</th>
+                    <th>Proof of Payment</th>
                     <th>Actions</th>
                 </thead>
                 <tbody>
@@ -36,19 +37,33 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('view-invoice',$invoice->id)}}" class="btn btn-success btn-sm"><i
-                                    class="fa-solid fa-eye"></i></a>
-                                    @if($invoice->status == "pending" && auth()->user()->user_type == 'client')
-                            <a href="{{route('create-order',$invoice->id)}}" class="btn btn-primary btn-sm"><i class="fa-solid fa-check"></i></a>    
-                            @endif
-                            @if(auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'internal')
-                            <button data-bs-toggle="modal" data-invoice_id ="{{$invoice->id}}"
-                            data-invoice_sales_tax ="{{$invoice->sales_tax}}"
-                            data-invoice_freight_charges ="{{$invoice->freight_charges}}"
-                                data-bs-target="#productsModal" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil"></i></button>
+                            @if(!empty($invoice->payment_proof))
+                            <a href="{{asset('storage/payment_proofs/'.$invoice->payment_proof)}}" target="_blank"
+                                class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i></a>
+                            @else
+                            <span class="badge bg-danger">No Proof</span>
                             @endif
                         </td>
-                    @endforeach
+                        <td>
+                            <a href="{{route('view-invoice',$invoice->id)}}" class="btn btn-success btn-sm"><i
+                                    class="fa-solid fa-eye"></i></a>
+                            @if($invoice->status == "pending" && auth()->user()->user_type == 'client')
+                            <button class="btn btn-primary btn-sm approve-btn" data-bs-toggle="modal"
+                                data-bs-target="#approveModal" data-invoice_id="{{$invoice->id}}"><i
+                                    class="fa-solid fa-check"></i></button>
+                            @endif
+                            @if(auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'internal')
+                            <button data-bs-toggle="modal" data-invoice_id="{{$invoice->id}}"
+                                data-invoice_sales_tax="{{$invoice->sales_tax}}"
+                                data-invoice_freight_charges="{{$invoice->freight_charges}}"
+                                data-bs-target="#productsModal" class="btn btn-primary btn-sm"><i
+                                    class="fa-solid fa-pencil"></i></button>
+                                    <button class="btn btn-danger btn-sm delete-btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal" data-invoice_id="{{$invoice->id}}"><i
+                                    class="fa-solid fa-trash"></i></button>
+                            @endif
+                        </td>
+                        @endforeach
                 </tbody>
             </table>
             {{$invoices->links()}}
@@ -60,11 +75,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Category</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Invoice</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h6>Are you sure you want to delete this category?</h6>
+                <h6>Are you sure you want to delete this invocie?</h6>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <a type="button" href="#" id="modal-delete-btn" class="btn btn-danger">Delete</a>
@@ -72,6 +87,32 @@
             </div>
         </div>
     </div>
+</div>
+<!-- Approve Modal -->
+<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Approve Invoice</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="approve_modal_form" method="post" enctype="multipart/form-data" action="{{route('create-order')}}">
+                @csrf
+                <input type="hidden" id="invoice_id" name="invoice_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="payment_proof">Proof of Payment</label>
+                        <input type="file" name="payment_proof" id="payment_proof" class="form-control"
+                            placeholder="Enter Payment Proof" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Accept</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 <!-- Invoice Products Modal -->
 <div class="modal fade" id="productsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -144,6 +185,16 @@ $('#productsModal').on('show.bs.modal', function(event) {
             $('#products').html(response);
         }
     })
+})
+$('#approveModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget)
+    var invoice_id = button.data('invoice_id')
+    $('#invoice_id').val(invoice_id)
+})
+$('#deleteModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget)
+    var invoice_id = button.data('invoice_id')
+    $('#modal-delete-btn').attr('href', '/delete-invoice/' + invoice_id);
 })
 </script>
 @endsection

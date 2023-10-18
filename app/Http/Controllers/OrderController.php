@@ -23,14 +23,23 @@ class OrderController extends Controller
         $data = compact('orders');
         return view('orders.index')->with($data);
     }
-    public function create($invoice_id)
+    public function create(Request $request)
     {   
-        $invoice = Invoice::find($invoice_id);
+        $invoice = Invoice::find($request->invoice_id);
+        //if request has file payment_proof
+        if($request->hasFile('payment_proof'))
+        {
+            $file = $request->file('payment_proof');
+            $file_name = time().$file->getClientOriginalName();
+            //file in storage like category
+            $file->storeAs('public/payment_proofs', $file_name);
+            $invoice->payment_proof = $file_name;
+        }
         $invoice->status = "accected";
         $invoice->save();
         $order = new Order();
         $order->user_id = auth()->user()->id;
-        $order->invoice_id = $invoice_id;
+        $order->invoice_id = $invoice->id;
         $order->save();
         //send notification to admins and internals
         $admins = User::where('user_type', 'admin')->orWhere('user_type', 'internal')->get();

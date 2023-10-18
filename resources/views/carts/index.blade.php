@@ -13,6 +13,8 @@
             <table class="table table-hover">
                 <thead>
                     <th>Product</th>
+                    <th>SKU</th>
+                    <th>Size</th>
                     <th>Quantity</th>
                     <th>Price Per Unit ($)</th>
                     <th>Total Price ($)</th>
@@ -23,6 +25,8 @@
 
                     <tr>
                         <td>{{ $cart->product->name }}</td>
+                        <td>{{ $cart->product->sku }}</td>
+                        <td>{{ $cart->product->size }}</td>
                         <td>{{ $cart->quantity }}</td>
                         <td>{{ $cart->product->price }} $</td>
                         <td>{{ $cart->product->price * $cart->quantity }} $</td>

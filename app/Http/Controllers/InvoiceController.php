@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
+use App\Models\Product;
+use App\Models\User;
+use App\Models\Notification;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -32,6 +36,17 @@ class InvoiceController extends Controller
         $invoice->freight_charges = $request->freight_charges;
         $invoice->save();
         return redirect()->back()->with('success', 'Invoice updated successfully!');
+    }
+    public function delete($id)
+    {
+        $invoice = Invoice::find($id);
+        $orders = Order::where('invoice_id', $invoice->id)->get();
+        if(count($orders) > 0)
+        {
+            return redirect()->back()->with('error', 'You can not delete this invoice because it has orders!');
+        }
+        $invoice->delete();
+        return redirect()->back()->with('success', 'Invoice deleted successfully!');
     }
     public function get_invoice_products($id)
     {

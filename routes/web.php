@@ -63,7 +63,7 @@ Route::get('/view-invoice/{id}',[App\Http\Controllers\InvoiceController::class, 
 Route::get('/get-invoice-products/{id}', [App\Http\Controllers\InvoiceController::class, 'get_invoice_products'])->name('get-invoice-products');
 Route::post('/update-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'update'])->name('update-invoice');
 Route::get('/orders',[App\Http\Controllers\OrderController::class, 'index'])->name('orders');
-Route::get('/create-order/{invoice_id}',[App\Http\Controllers\OrderController::class, 'create'])->name('create-order');
+Route::post('/create-order',[App\Http\Controllers\OrderController::class, 'create'])->name('create-order');
 Route::post('/change-order-status',[App\Http\Controllers\OrderController::class, 'change_order_status'])->name('change-order-status');
 //internals crud
 Route::get('/internals',[App\Http\Controllers\InternalController::class, 'index'])->name('internals');
@@ -72,3 +72,5 @@ Route::get('/delete-internal/{id}',[App\Http\Controllers\InternalController::cla
 Route::post('/update-internal/{id}',[App\Http\Controllers\InternalController::class, 'update'])->name('update-internal');
 //get-type-by-category
 Route::get('/get-type-by-category/{id}',[App\Http\Controllers\CatagoryController::class, 'get_type_by_category'])->name('get-type-by-category');
+Route::get('delete-invoice/{id}',[App\Http\Controllers\InvoiceController::class, 'delete'])->name('delete-invoice');
+Route::get('delete-query/{id}',[App\Http\Controllers\QueryController::class, 'delete'])->name('delete-query');

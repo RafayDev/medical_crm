@@ -29,12 +29,12 @@ class ProductController extends Controller
         
         $categories = Category::all();
         $types = Type::all();
-        $products = Product::all();
+        $products = Product::paginate(50);
         if(auth()->user()->user_type == 'client')
         {
             $user = User::find(auth()->user()->id);
             $user_categories = $user->user_categories;
-            $products = Product::whereIn('category_id', $user_categories->pluck('category_id'))->get();
+            $products = Product::whereIn('category_id', $user_categories->pluck('category_id'))->paginate(50);
             $data = compact('categories', 'types', 'products');
             return view('products.index')->with($data);
         }
@@ -48,6 +48,7 @@ class ProductController extends Controller
         $product->category_id = $request->category;
         $product->type_id = $request->type;
         $product->sku = $request->sku;
+        $product->size = $request->size;
         $product->price = $request->price;
         $product->description = $request->description;
         if ($request->hasFile('image')) {
@@ -79,6 +80,7 @@ class ProductController extends Controller
         $product->category_id = $request->category;
         $product->type_id = $request->type;
         $product->sku = $request->sku;
+        $product->size = $request->size;
         $product->price = $request->price;
         $product->description = $request->description;
         $product->save();

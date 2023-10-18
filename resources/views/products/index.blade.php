@@ -38,6 +38,11 @@
                                     placeholder="Enter Product Sku">
                             </div>
                             <div class="form-group">
+                                <label for="size">Product Size</label>
+                                <input type="text" name="size" id="size" class="form-control"
+                                    placeholder="Enter Product Size">
+                            </div>
+                            <div class="form-group">
                                 <label for="category">Product Catagory</label>
                                 <select name="category" id="category" class="form-control">
                                     <option value="">Select Catagory</option>
@@ -81,13 +86,14 @@
                 style="object-fit: contain; height: 300px;  width: 200px;">
             <div class="mt-3 text-left">
                 <h5>{{$product->name}}</h5>
-                <h6>{{$product->sku}}</h6>
-                <h5>{{$product->price}}$</h5>
+                <h6>SKU: {{$product->sku}}</h6>
+                <h6>Size: {{$product->size}}</h6>
+                <h5>Price:{{$product->price}}$</h5>
                 @if(Auth::user()->user_type == 'admin')
                 <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-product_id="{{$product->id}}"
                     data-product_name="{{$product->name}}" data-product_category="{{$product->category_id}}"
                     data-product_type="{{$product->type_id}}" data-product_price="{{$product->price}}"
-                    data-product_sku = "{{$product->sku}}"
+                    data-product_sku="{{$product->sku}}" data-product_size="{{$product->size}}"
                     data-product_description="{{$product->description}}" data-bs-toggle="modal"
                     data-bs-target="#editModal"><i class="fa fa-edit"></i></button>
                 <button class="btn btn-square btn-danger m-2 delete-btn" type="button"
@@ -134,6 +140,9 @@
         </div>
     </div>
     @endforeach
+    <div class="col-md-12 text-center">
+        {{$products->links()}}
+    </div>
 </div>
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,6 +185,10 @@
                     <div class="form-grouo">
                         <label for="sku">Product Sku</label>
                         <input type="text" name="sku" id="sku" class="form-control" placeholder="Enter Product Sku">
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Product Size</label>
+                        <input type="text" name="size" id="size" class="form-control" placeholder="Enter Product Size">
                     </div>
                     <div class="form-group">
                         <label for="category">Product Catagory</label>
@@ -304,12 +317,13 @@ $(document).on('click', '.edit-btn', function() {
         }
     });
     var product_sku = $(this).data('product_sku');
+    var product_size = $(this).data('product_size');
     var product_price = $(this).data('product_price');
     var product_description = $(this).data('product_description');
     $('#editProductForm #name').val(product_name);
     $('#editProductForm #category').val(product_category);
-    $('#editProductForm #type').val(product_type);
     $('#editProductForm #sku').val(product_sku);
+    $('#editProductForm #size').val(product_size);
     $('#editProductForm #price').val(product_price);
     $('#editProductForm #description').val(product_description);
     $('#editProductForm').attr('action', '/edit-product/' + product_id);

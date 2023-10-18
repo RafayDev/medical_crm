@@ -78,21 +78,29 @@ class QueryController extends Controller
             $html .= '<tr>';
             $html .= '<td>'.$count.'</td>';
             $html .= '<td>'.$query_product->product->name.'</td>';
+            $html .= '<td>'.$query_product->product->sku.'</td>';
+            $html .= '<td>'.$query_product->product->size.'</td>';
             $html .= '<td>'.$query_product->quantity.'</td>';
-            $html .= '<td>'.$query_product->product->price.'$</td>';
-            $html .= '<td>'.$query_product->product->price*$query_product->quantity.'$</td>';
+            $html .= '<td><input type="text" name="price_per_unit[]" onkeyup="calculate_total_price(this.value, '.$query_product->quantity.', '.$count.')" class="form-control" value="'.$query_product->product->price.'"/></td>';
+            $html .= '<td id="total-price-col'.$count.'">'.$query_product->product->price*$query_product->quantity.'$</td>';
             $total += $query_product->product->price*$query_product->quantity;
             $html .= '</tr>';
             $html .= '<input type="hidden" name="product_id[]" value="'.$query_product->product->id.'"/>';
             $html .= '<input type="hidden" name="quantity[]" value="'.$query_product->quantity.'"/>';
-            $html .= '<input type="hidden" name="price_per_unit[]" value="'.$query_product->product->price.'"/>';
+            // $html .= '<input type="hidden" name="price_per_unit[]" value="'.$query_product->product->price.'"/>';
             $html .= '<input type="hidden" name="total_price[]" value="'.$query_product->product->price*$query_product->quantity.'"/>';
             $count++;
         }
         $html .= '<tr>';
-        $html .= '<td colspan="4" class="text-right"><strong>Total($)</strong></td>';
-        $html .= '<td>'.$total.'$</td>';
+        $html .= '<td colspan="6" class="text-right"><strong>Total($)</strong></td>';
+        $html .= '<td id="full-total">'.$total.'$</td>';
         $html .= '</tr>';
         return $html;
+    }
+    public function delete($id)
+    {
+        $query = Query::find($id);
+        $query->delete();
+        return redirect()->back()->with('success', 'Query deleted successfully!');
     }
 }

@@ -34,6 +34,11 @@
                         <td>
                             <a href="{{route('view-query',$query->id)}}" class="btn btn-success btn-sm"><i
                                     class="fa-solid fa-eye"></i></a>
+                            @if($query->status == 'pending')
+                            <button class="btn btn-danger btn-sm delete-btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal" data-query_id="{{$query->id}}"><i
+                                    class="fa-solid fa-trash"></i></button>
+                            @endif
                             <!-- Approve  -->
                             @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal')
                             @if($query->status == 'pending')
@@ -69,6 +74,24 @@
         </div>
     </div>
 </div>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Query</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Are you sure you want to delete Query?</h6>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a type="button" href="#" id="modal-delete-btn" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Query Products Modal -->
 <div class="modal fade" id="productsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -86,6 +109,8 @@
                             <thead>
                                 <th>#</th>
                                 <th>Item Description</th>
+                                <th>SKU </th>
+                                <th>Size</th>
                                 <th>Quantity</th>
                                 <th>Price per Unit ($)</th>
                                 <th>Total Price ($)</th>
@@ -135,5 +160,20 @@ $('#productsModal').on('show.bs.modal', function(event) {
         }
     })
 })
+$('#deleteModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget)
+    var query_id = button.data('query_id')
+    $('#modal-delete-btn').attr("href", "/delete-query/" + query_id);
+})
+function calculate_total_price(price_per_unit, quantity, count) {
+    var total_price = price_per_unit * quantity;
+    $('#total-price-col'+ count).html(total_price + '$');
+    $('input[name="total_price[]"]').eq(count - 1).val(total_price);
+    var full_total = 0;
+    $('input[name="total_price[]"]').each(function() {
+        full_total += parseFloat($(this).val());
+    });
+    $('#full-total').html(full_total + '$');
+}
 </script>
 @endsection

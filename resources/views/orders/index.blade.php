@@ -145,10 +145,14 @@ a {
     <div class="col-md-4">
         <ol class="stepper">
             <h6> Invoice No: AML-{{$order->invoice->id}}</h6>
-            <li class="stepper-item {{ ($order->status == 'in-process' || $order->status == 'manufacturing') ? 'complete' : '' }}">
+            <li class="stepper-item {{ ($order->status == 'in-process' || $order->status == 'manufacturing' || $order->status == 'in-transit') ? 'complete' : '' }}">
                 <span class="stepper-counter"></span>
                 <a href="#" class="stepper-link">
+                    @if($order->status == 'in-process')
+                    <span>Your Payment has been recevied. Your order will be in manufacturing process soon </span>
+                    @else
                     <span>In-Process</span>
+                    @endif
                 </a>
                 <span class="stepper-line"></span>
             </li>
@@ -156,7 +160,11 @@ a {
             <li class="stepper-item {{ ($order->status == 'in-transit' || $order->status == 'manufacturing') ? 'complete' : '' }} ">
                 <span class="stepper-counter"></span>
                 <a href="#" class="stepper-link">
+                    @if($order->status == 'manufacturing')
+                    <span>Your Order against the AML-{{$order->invoice->id}} in manufacturing process</span>
+                    @else
                     <span>Munufacturing</span>
+                    @endif
                 </a>
                 <span class="stepper-line"></span>
             </li>

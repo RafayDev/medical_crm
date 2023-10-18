@@ -144,6 +144,8 @@ $total = 0;
             <thead>
                 <th>#</th>
                 <th>Product Name</th>
+                <th>SKU </th>
+                <th>Size</th>
                 <th>Price Per Unit ($) </th>
                 <th>Quantity</th>
                 <th>Total Price ($)</th>
@@ -156,21 +158,23 @@ $total = 0;
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$invoice_product->product->name}}</td>
+                    <td>{{$invoice_product->product->sku}}</td>
+                    <td>{{$invoice_product->product->size}}</td>
                     <td>{{$invoice_product->price_per_unit}} $</td>
                     <td>{{$invoice_product->quantity}}</td>
                     <td>{{$invoice_product->total_price}} $</td>
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="4"><strong>Sales Tax ($)</strong></td>
+                    <td colspan="6"><strong>Sales Tax ($)</strong></td>
                     <td><strong>{{$invoice->sales_tax}} $</strong></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><strong>Freight Charges($)</strong></td>
+                    <td colspan="6"><strong>Freight Charges($)</strong></td>
                     <td><strong>{{$invoice->freight_charges}} $</strong></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><strong>Total ($)</strong></td>
+                    <td colspan="6"><strong>Total ($)</strong></td>
                     <td><strong>{{$invoice->sales_tax+$invoice->freight_charges+$total}} $</strong></td>
                 </tr>
             </tbody>

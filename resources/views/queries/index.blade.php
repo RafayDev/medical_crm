@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12 mt-4">
-        <h3>Inquiries</h3>
+        <h3>Quotations</h3>
     </div>
 </div>
 <div class="container-fluid bg-light">
@@ -11,20 +11,16 @@
             <table class="table table-hover">
                 <thead>
                     <th>#</th>
-                    <th>Client Name</th>
-                    <th>Query Status</th>
-                    <th>Query Date</th>
+                    <th>Quotations No</th>
+                    <th>Quotations Status</th>
+                    <th>Quotations Date</th>
                     <th>Actions</th>
                 </thead>
                 <tbody>
                     @foreach($queries as $query)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        @if(!empty($query->user->name))
-                        <td>{{$query->user->name}}</td>
-                        @else
-                        <td>Client Deleted</td>
-                        @endif
+                        <td>AML-{{$query->id}}</td>
                         @if($query->status == 'pending')
                         <td><span class="badge bg-warning text-dark">Pending</span></td>
                         @elseif($query->status == 'approved')
@@ -61,7 +57,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Approve Query</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Approve Quotations</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -79,11 +75,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Query</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Quotations</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h6>Are you sure you want to delete Query?</h6>
+                <h6>Are you sure you want to delete Quotations?</h6>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <a type="button" href="#" id="modal-delete-btn" class="btn btn-danger">Delete</a>

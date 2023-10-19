@@ -6,6 +6,10 @@
                     <!-- image in span -->
                     <!-- <span> -->
                         @if(Auth::user()->user_type == 'client')
+                        <div style="width: 100%; overflow: hidden;  margin: 0 auto;white-space: wrap;">
+                        <h4 class=" text-center">{{Auth::user()->company->name}}</h4>
+                        </div>
+                        
                         <img src="{{asset('storage/logos/'.Auth::user()->logo)}}" alt=""
                         style = "width: 100%; height: 100%;">
                         @else
@@ -37,8 +41,16 @@
                     <a href="/types" class="{{ (request()->is('types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Sub Category</a>
                     <!-- <a href="/sub-types" class="{{ (request()->is('sub-types')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-toolbox me-2"></i>Sub Types</a> -->
                     @endif
+                    @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal')
                     <a href="/products" class="{{ (request()->is('products')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-boxes me-2"></i>All Products</a>
-                    <a href="/queries" class="{{ (request()->is('queries')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-question-circle me-2"></i>Inquiries</a>
+                    @endif
+                    <a href="/queries" class="{{ (request()->is('queries')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-question-circle me-2"></i>
+                    @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal')
+                    QRF
+                    @else
+                    Quotation
+                    @endif
+                    </a>
                     <a href="/invoices" class="{{ (request()->is('invoices')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Invocies</a>
                     <a href="/orders" class="{{ (request()->is('orders')) ? 'active' : '' }} nav-item nav-link"><i class="fa-solid fa-boxes-packing me-2"></i>Tracking</a>
                 </div>

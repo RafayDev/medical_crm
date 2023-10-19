@@ -10,7 +10,7 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="fa fa-plus"></i> Category
         </button>
-@endif
+        @endif
         <!-- Modal -->
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -23,10 +23,6 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label for="image">Category Image: </label>
-                                <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                            </div>
                             <div class="form-group">
                                 <label for="name">Category Name: </label>
                                 <input type="text" name="name" id="name" class="form-control"
@@ -43,28 +39,26 @@
         </div>
     </div>
 </div>
-<div class="row mt-3">
+<div class="row mt-5">
     @foreach($categories as $category)
-    <div class="col-md-3">
-        <div class="box bg-light">
-           <a href="{{route('category-types',$category->id)}}"> <img src="{{asset('storage/categories/'.$category->image)}}" alt="{{$category->name}}" height = "100px" width = "100%"></a>
-            <div class="box-body">
+
+    <div class="col-md-4">
+        <a href="/category-types/{{$category->id}}">
+            <div class="text-center" style="border:2px solid black; padding: 10px;">
                 <h5>{{$category->name}}</h5>
-                @if(Auth::user()->user_type == 'admin')
-                <button class="btn btn-square btn-primary m-2 edit-btn" type="button" data-category_id="{{$category->id}}"
-                data-category_name = "{{$category->name}}"
-                data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa fa-edit"></i></button>
-                <button class="btn btn-square btn-danger m-2 delete-btn" type="button"
-                    data-category_id="{{$category->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
-                        class="fa fa-trash"></i></button>
-                <!-- <a href="{{route('assigned-types', $category->id)}}" class="btn btn-square btn-success m-2"><i
-                        class="fa fa-plus"></i></a>  -->
-                @endif
             </div>
-            <!-- <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                <a href="#" class="btn btn-sm btn-danger">Delete</a> -->
+        </a>
+        @if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'internal')
+        <div class="text-center mt-2">
+            <button type="button" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                data-bs-target="#editModal" data-category_id="{{$category->id}}"
+                data-category_name="{{$category->name}}"><i class="fa fa-edit"></i></button>
+            <button type="button" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
+                data-bs-target="#deleteModal" data-category_id="{{$category->id}}"><i class="fa fa-trash"></i></button>
         </div>
+        @endif
     </div>
+
     @endforeach
 </div>
 <!-- Delete Modal -->
@@ -97,10 +91,6 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="image">Category Image: </label>
-                        <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                    </div>
-                    <div class="form-group">
                         <label for="name">Category Name: </label>
                         <input type="text" name="name" id="name" class="form-control" placeholder="Enter Category Name">
                     </div>
@@ -123,10 +113,6 @@ $(function() {
                 required: true,
                 minlength: 3,
                 maxlength: 50
-            },
-            image: {
-                required: true,
-                extension: "jpg|jpeg|png|gif"
             }
         },
         messages: {
@@ -134,10 +120,6 @@ $(function() {
                 required: "Please enter category name",
                 minlength: "Category name must be at least 3 characters long",
                 maxlength: "Category name must be less than 50 characters long"
-            },
-            image: {
-                required: "Please select category image",
-                extension: "Please select only jpg, jpeg, png or gif image"
             }
         },
         errorElement: "small",
@@ -153,9 +135,6 @@ $('#editCategoryForm').validate({
             required: true,
             minlength: 3,
             maxlength: 50
-        },
-        image: {
-            extension: "jpg|jpeg|png|gif"
         }
     },
     messages: {
@@ -163,9 +142,6 @@ $('#editCategoryForm').validate({
             required: "Please enter category name",
             minlength: "Category name must be at least 3 characters long",
             maxlength: "Category name must be less than 50 characters long"
-        },
-        image: {
-            extension: "Please select only jpg, jpeg, png or gif image"
         }
     },
     errorElement: "small",

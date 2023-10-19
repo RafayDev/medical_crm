@@ -44,17 +44,9 @@ class CatagoryController extends Controller
     }
     public function create(Request $request)
     {
-        $request->validate([
-            'name' => 'required|min:3|max:50',
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif'
-        ]);
-        $imageName = time() . '.' . $request->image->extension();
-        //store in storage folder
-        $request->image->storeAs('public/categories', $imageName);
         $category = new Category();
         $category->name = $request->name;
         $category->slug = Str::slug($request->name, '-');
-        $category->image = $imageName;
         $category->save();
         return redirect()->back()->with('success', 'Category Added Successfully');
     }
@@ -66,19 +58,15 @@ class CatagoryController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|min:3|max:50',
-            'image' => 'image|mimes:jpg,jpeg,png,gif'
-        ]);
         $category = Category::find($id);
         $category->name = $request->name;
         $category->slug = Str::slug($request->name, '-');
-        if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            //store in storage folder
-            $request->image->storeAs('public/categories', $imageName);
-            $category->image = $imageName;
-        }
+        // if ($request->hasFile('image')) {
+        //     $imageName = time() . '.' . $request->image->extension();
+        //     //store in storage folder
+        //     $request->image->storeAs('public/categories', $imageName);
+        //     $category->image = $imageName;
+        // }
         $category->save();
         return redirect()->back()->with('success', 'Category Updated Successfully');
     }

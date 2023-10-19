@@ -7,7 +7,7 @@
                     <!-- <span> -->
                         @if(Auth::user()->user_type == 'client')
                         <div style="width: 100%; overflow: hidden;  margin: 0 auto;white-space: wrap;">
-                        <h4 class=" text-center">{{Auth::user()->company->name}}</h4>
+                        <h6 class=" text-center">{{Auth::user()->company->name}}</h6>
                         </div>
                         
                         <img src="{{asset('storage/logos/'.Auth::user()->logo)}}" alt=""

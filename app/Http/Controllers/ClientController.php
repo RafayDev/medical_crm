@@ -47,6 +47,7 @@ class ClientController extends Controller
         $company = new Company();
         $company->name = $request->company_name;
         $company->address = $request->client_address;
+        $company->quotation_series = $request->quotation_series;
         $company->save();
         $user = new User();
         $user->name = $request->client_name;
@@ -97,6 +98,7 @@ class ClientController extends Controller
         $categories = UserCategory::where('user_id', $id)->get();
         $company->name = $request->company_name;
         $company->address = $request->client_address;
+        $company->quotation_series = $request->quotation_series;
         $company->save();
         $user->name = $request->client_name;
         $user->email = $request->client_email;

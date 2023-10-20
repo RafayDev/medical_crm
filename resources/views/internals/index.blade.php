@@ -2,13 +2,13 @@
 @section('content')
 <div class="row">
     <div class="col-md-10 mt-3">
-        <h2 class="fs-5">Internal</h2>
+        <h2 class="fs-5">Users</h2>
     </div>
     <div class="col-md-2">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary mt-2 float-right" data-bs-toggle="modal"
             data-bs-target="#addModal">
-            <i class="fa fa-plus"></i> Internal
+            <i class="fa fa-plus"></i> User
         </button>
 
         <!-- Modal -->
@@ -16,7 +16,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Internal</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add User</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="{{route('add-internal')}}" method="POST" id="addClientForm">
@@ -31,6 +31,14 @@
                                 <label for="client_email">Email</label>
                                 <input type="email" class="form-control" id="client_email" name="client_email"
                                     placeholder="Enter Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <select name="role" id="role" class="form-control" required>
+                                    <option value="">Select Role</option>
+                                    <option value="internal">Internal</option>
+                                    <option value="tracker">Tracker</option>\
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
@@ -56,6 +64,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Role</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -64,11 +73,13 @@
                     <tr>
                         <td>{{$client->name}}</td>
                         <td>{{$client->email}}</td>
+                        <td>{{$client->user_type}}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm edit-btn" data-bs-toggle="modal"
-                                data-client_id="{{$client->id}}" data-client_name="{{$client->name}}" data-client_email="{{$client->email}}"
-                                data-client_phone="{{$client->phone}}" data-bs-target="#updateModal"><i
-                                    class="fa fa-pencil"></i></button>
+                                data-client_id="{{$client->id}}" data-client_name="{{$client->name}}"
+                                data-client_email="{{$client->email}}" data-client_phone="{{$client->phone}}"
+                                data-role = "{{$client->user_type}}"
+                                data-bs-target="#updateModal"><i class="fa fa-pencil"></i></button>
                             <button type="button" class="btn btn-danger btn-sm delete-btn" data-bs-toggle="modal"
                                 data-client_id="{{$client->id}}" data-bs-target="#deleteModal"><i
                                     class="fa fa-trash"></i></button>
@@ -88,7 +99,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Are you sure you want to delete this Internal?</h6>
+                    <h6>Are you sure you want to delete this User?</h6>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <a type="button" href="#" id="modal-delete-btn" class="btn btn-danger">Delete</a>
@@ -102,7 +113,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Client</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Update User</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{route('add-client')}}" method="POST" id="updateClientForm">
@@ -117,6 +128,14 @@
                             <label for="client_email">Email</label>
                             <input type="email" class="form-control" id="client_email" name="client_email"
                                 placeholder="Enter Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select name="role" id="role" class="form-control" required>
+                                <option value="">Select Role</option>
+                                <option value="internal">Internal</option>
+                                <option value="tracker">Tracker</option>\
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
@@ -145,9 +164,11 @@
             var client_name = $(this).data('client_name');
             var company_name = $(this).data('company_name');
             var client_email = $(this).data('client_email');
+            var role = $(this).data('role');
             $('#updateModal #client_name').val(client_name);
             $('#updateModal #company_name').val(company_name);
             $('#updateModal #client_email').val(client_email);
+            $('#updateModal #role').val(role);
             $('#updateModal #updateClientForm').attr('action', '/update-internal/' + client_id);
         });
     });

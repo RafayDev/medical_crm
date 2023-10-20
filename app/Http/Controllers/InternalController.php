@@ -30,7 +30,7 @@ class InternalController extends Controller
     public function index()
     {
         $categories = Category ::all();
-        $clients = User::where('user_type', 'internal')->get();
+        $clients = User::where('user_type', 'internal')->orwhere('user_type', 'tracker')->get();
         $data = compact('clients','categories');
         return view('internals.index')->with($data);
     }
@@ -44,15 +44,15 @@ class InternalController extends Controller
         $user->name = $request->client_name;
         $user->email = $request->client_email;
         $user->password = Hash::make($request->password);
-        $user->user_type = 'internal';
+        $user->user_type = $request->role;
         $user->save();
-        return redirect()->route('internals')->with('success', 'Internal created successfully.');
+        return redirect()->route('internals')->with('success', 'User created successfully.');
     }
     public function delete($id)
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('internals')->with('success', 'Internal deleted successfully.');
+        return redirect()->route('internals')->with('success', 'User deleted successfully.');
     }
     public function update(Request $request, $id)
     {
@@ -63,8 +63,8 @@ class InternalController extends Controller
         {
         $user->password = Hash::make($request->password);
         }
-        $user->user_type = 'internal';
+        $user->user_type = $request->role;
         $user->save();
-        return redirect()->route('internals')->with('success', 'Internal updated successfully.');
+        return redirect()->route('internals')->with('success', 'User updated successfully.');
     }
 }

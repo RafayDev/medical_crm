@@ -11,21 +11,17 @@
             <table class="table table-hover">
                 <thead>
                     <th>#</th>
-                    <th>Client Name</th>
+                    <th>Quotation No</th>
                     <th>invoice Date</th>
                     <th>Status</th>
-                    <th>Proof of Payment</th>
+                    <th>Payment Link</th>
                     <th>Actions</th>
                 </thead>
                 <tbody>
                     @foreach($invoices as $invoice)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        @if(!empty($invoice->user->name))
-                        <td>{{$invoice->user->name}}</td>
-                        @else
-                        <td>Client Deleted</td>
-                        @endif
+                        <td>{{$invoice->user->company->quotation_series}}-{{$invoice->query_id}}</td>
                         <td>{{$invoice->created_at->format('d-m-Y')}}</td>
                         <td>
                             @if($invoice->status == "pending")
@@ -37,30 +33,29 @@
                             @endif
                         </td>
                         <td>
-                            @if(!empty($invoice->payment_proof))
-                            <a href="{{asset('storage/payment_proofs/'.$invoice->payment_proof)}}" target="_blank"
-                                class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i></a>
-                            @else
-                            <span class="badge bg-danger">No Proof</span>
+                            @if($invoice->status == "pending")
+                            <a href="{{$invoice->payment_proof}}" class="btn btn-primary"><i
+                                    class="fa-solid fa-link"></i> Click to Pay Invoice</a>
                             @endif
                         </td>
                         <td>
                             <a href="{{route('view-invoice',$invoice->id)}}" class="btn btn-success btn-sm"><i
                                     class="fa-solid fa-eye"></i></a>
-                            @if($invoice->status == "pending" && auth()->user()->user_type == 'client')
-                            <button class="btn btn-primary btn-sm approve-btn" data-bs-toggle="modal"
-                                data-bs-target="#approveModal" data-invoice_id="{{$invoice->id}}"><i
-                                    class="fa-solid fa-check"></i></button>
-                            @endif
                             @if(auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'internal')
                             <button data-bs-toggle="modal" data-invoice_id="{{$invoice->id}}"
                                 data-invoice_sales_tax="{{$invoice->sales_tax}}"
                                 data-invoice_freight_charges="{{$invoice->freight_charges}}"
+                                data-invoice_payment_proof = "{{$invoice->payment_proof}}"
                                 data-bs-target="#productsModal" class="btn btn-primary btn-sm"><i
                                     class="fa-solid fa-pencil"></i></button>
                                     <button class="btn btn-danger btn-sm delete-btn" data-bs-toggle="modal"
                                 data-bs-target="#deleteModal" data-invoice_id="{{$invoice->id}}"><i
                                     class="fa-solid fa-trash"></i></button>
+                                    @if($invoice->status == "pending")
+                                    <button class="btn btn-primary approve-btn" data-bs-toggle="modal"
+                                data-bs-target="#approveModal" data-invoice_id="{{$invoice->id}}"><i
+                                    class="fa-solid fa-check"></i> Create Order</button>
+                                    @endif
                             @endif
                         </td>
                         @endforeach
@@ -100,11 +95,12 @@
                 @csrf
                 <input type="hidden" id="invoice_id" name="invoice_id">
                 <div class="modal-body">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="payment_proof">Proof of Payment</label>
                         <input type="file" name="payment_proof" id="payment_proof" class="form-control"
-                            placeholder="Enter Payment Proof" required>
-                    </div>
+                            placeholder="Enter Payment Proof" required> -->
+                    Do you want to create order?
+                    <!-- </div> -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Accept</button>
@@ -154,6 +150,13 @@
                                     placeholder="Enter Freight Charges" required>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="payment_proof">Payment Link</label>
+                                <input type="text" name="payment_proof" id="payment_proof" class="form-control"
+                                    placeholder="Enter Payment Link" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -175,6 +178,7 @@ $('#productsModal').on('show.bs.modal', function(event) {
     $('#invoice_id').val(invoice_id)
     $('#productsModal #sales_tax').val(sales_tax)
     $('#productsModal #freight_charges').val(freight_charges)
+    $('#productsModal #payment_proof').val(button.data('invoice_payment_proof'))
     //form attribute
     $('#productsModal form').attr('action', '/update-invoice/' + invoice_id);
     var modal = $(this)
@@ -196,5 +200,15 @@ $('#deleteModal').on('show.bs.modal', function(event) {
     var invoice_id = button.data('invoice_id')
     $('#modal-delete-btn').attr('href', '/delete-invoice/' + invoice_id);
 })
+function calculate_total_price(price_per_unit, quantity, count) {
+    var total_price = price_per_unit * quantity;
+    $('#total-price-col'+ count).html(total_price + '$');
+    $('input[name="total_price[]"]').eq(count - 1).val(total_price);
+    var full_total = 0;
+    $('input[name="total_price[]"]').each(function() {
+        full_total += parseFloat($(this).val());
+    });
+    $('#full-total').html(full_total + '$');
+}
 </script>
 @endsection

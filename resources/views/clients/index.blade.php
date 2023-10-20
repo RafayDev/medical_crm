@@ -48,6 +48,11 @@
                                     placeholder="Enter Phone" required>
                             </div>
                             <div class="form-group">
+                                <label for="quotation_series">Quotation Series</label>
+                                <input type="text" class="form-control" id="quotation_series" name="quotation_series"
+                                    placeholder="Enter Quotation Series" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="client_address">Address</label>
                                 <textarea class="form-control" id="client_address" name="client_address"
                                     placeholder="Enter Address" required></textarea>
@@ -112,6 +117,7 @@
                                 data-client_id="{{$client->id}}" 
                                 data-client_name = "{{$client->name}}"
                                 data-company_name = "{{$client->company->name}}"
+                                data-quotation_series = "{{$client->company->quotation_series}}"
                                 data-client_email = "{{$client->email}}"
                                 data-client_phone = "{{$client->phone}}"
                                 data-client_address = "{{$client->company->address}}"
@@ -183,6 +189,11 @@
                                     placeholder="Enter Phone" required>
                             </div>
                             <div class="form-group">
+                                <label for="quotation_series">Quotation Series</label>
+                                <input type="text" class="form-control" id="quotation_series" name="quotation_series"
+                                    placeholder="Enter Quotation Series" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="client_address">Address</label>
                                 <textarea class="form-control" id="client_address" name="client_address"
                                     placeholder="Enter Address"></textarea>
@@ -230,6 +241,7 @@
             var client_id = $(this).data('client_id');
             var client_name = $(this).data('client_name');
             var company_name = $(this).data('company_name');
+            var quotation_series = $(this).data('quotation_series');
             var client_email = $(this).data('client_email');
             var client_phone = $(this).data('client_phone');
             var client_address = $(this).data('client_address');
@@ -239,6 +251,7 @@
             $('#updateModal #client_email').val(client_email);
             $('#updateModal #client_phone').val(client_phone);
             $('#updateModal #client_address').val(client_address);
+            $('#updateModal #quotation_series').val(quotation_series);
             $('#updateModal #updateClientForm').attr('action', '/update-client/' + client_id);
             // $('#Upadate_categories').empty();
             $.each(client_categories, function(index, value){

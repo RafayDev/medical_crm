@@ -39,9 +39,11 @@ class QueryController extends Controller
         $query->save();
         //create invoice
         $invoice = new Invoice();
+        $invoice->query_id = $query->id;
         $invoice->user_id = $query->user_id;
         $invoice->sales_tax = $request->sales_tax;
         $invoice->freight_charges = $request->freight_charges;
+        $invoice->payment_proof = $request->payment_proof;
         $invoice->save();
         $product_ids = $request->product_id;
         $quantities = $request->quantity;

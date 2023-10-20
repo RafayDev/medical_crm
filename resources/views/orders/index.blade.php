@@ -188,7 +188,7 @@ a {
     </div>
 </div>
 @endif
-@if(auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'internal')
+@if(auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'internal' || auth()->user()->user_type =='tracker')
 <div class="row bg-light">
     <div class="col-md-12 mt-4">
         <table class="table table-hover">

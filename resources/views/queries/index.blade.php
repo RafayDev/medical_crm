@@ -20,7 +20,7 @@
                     @foreach($queries as $query)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>AML-{{$query->id}}</td>
+                        <td>{{$query->user->company->quotation_series}}-{{$query->id}}</td>
                         @if($query->status == 'pending')
                         <td><span class="badge bg-warning text-dark">Pending</span></td>
                         @elseif($query->status == 'approved')
@@ -128,6 +128,13 @@
                                 <label for="freight_charges">Freight Charges ($)</label>
                                 <input type="number" name="freight_charges" id="freight_charges" class="form-control"
                                     placeholder="Enter Freight Charges" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form group">
+                                <label for="payment_proof">Payment Link</label>
+                                <input type="text" name="payment_proof" id="payment_proof" class="form-control"
+                                    placeholder="Enter Payment Link" required>
                             </div>
                         </div>
                     </div>

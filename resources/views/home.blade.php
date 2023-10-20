@@ -80,7 +80,7 @@
             </a>
         </div>
         @endif
-
+        @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal' || auth()->user()->user_type == 'client')
         <!-- Categories Card -->
         <div class="col-md-4 mb-4">
             <a href="/catagories" class="{{ (request()->is('catagories')) ? 'active-link' : '' }} text-decoration-none card-link">
@@ -94,7 +94,7 @@
                 </div>
             </a>
         </div>
-
+        @endif
         @if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'internal')
         <!-- Types Card -->
         <div class="col-md-4 mb-4">
@@ -126,6 +126,7 @@
         @endif
 
         <!-- Products Card -->
+        @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal')
         <div class="col-md-4 mb-4">
             <a href="/products" class="{{ (request()->is('products')) ? 'active-link' : '' }} text-decoration-none card-link">
                 <div class="card custom-card shadow-lg h-100">
@@ -138,7 +139,8 @@
                 </div>
             </a>
         </div>
-
+        @endif
+        @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal' || auth()->user()->user_type == 'client')
         <!-- Inquiries Card -->
         <div class="col-md-4 mb-4">
             <a href="/queries" class="{{ (request()->is('queries')) ? 'active-link' : '' }} text-decoration-none card-link">
@@ -146,13 +148,14 @@
                     <div class="card-body text-center py-5">
                         <i class="fa fa-question-circle mb-3"></i>
                         <h5 class="card-title mt-3">
-                            Inquiries
+                            Quotation
                         </h5>
                     </div>
                 </div>
             </a>
         </div>
-
+        @endif
+        @if(auth()->user()->user_type == 'admin'|| auth()->user()->user_type == 'internal' || auth()->user()->user_type == 'client')
         <!-- Invoices Card -->
         <div class="col-md-4 mb-4">
             <a href="/invoices" class="{{ (request()->is('invoices')) ? 'active-link' : '' }} text-decoration-none card-link">
@@ -166,7 +169,7 @@
                 </div>
             </a>
         </div>
-
+    @endif
         <!-- Tracking Card -->
         <div class="col-md-4 mb-4">
             <a href="/orders" class="{{ (request()->is('orders')) ? 'active-link' : '' }} text-decoration-none card-link">

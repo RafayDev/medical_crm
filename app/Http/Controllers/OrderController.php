@@ -26,32 +26,18 @@ class OrderController extends Controller
     public function create(Request $request)
     {   
         $invoice = Invoice::find($request->invoice_id);
-        //if request has file payment_proof
-        if($request->hasFile('payment_proof'))
-        {
-            $file = $request->file('payment_proof');
-            $file_name = time().$file->getClientOriginalName();
-            //file in storage like category
-            $file->storeAs('public/payment_proofs', $file_name);
-            $invoice->payment_proof = $file_name;
-        }
         $invoice->status = "accected";
         $invoice->save();
         $order = new Order();
-        $order->user_id = auth()->user()->id;
+        $order->user_id = $invoice->user_id;
         $order->invoice_id = $invoice->id;
         $order->save();
-        //send notification to admins and internals
-        $admins = User::where('user_type', 'admin')->orWhere('user_type', 'internal')->get();
-        foreach($admins as $admin)
-        {
           $notification = new Notification();
           $notification->from_user_id = auth()->user()->id;
-          $notification->to_user_id = $admin->id;
+          $notification->to_user_id = $invoice->user_id;
           $notification->type = 'order';
-          $notification->message = auth()->user()->name.' has accept the Invoice a new order created.';
+          $notification->message = 'Your Invoice AML-'.$invoice->id.' has been accepted.Now you can track your order';
           $notification->save();
-        }
         return redirect()->back()->with('success', 'Order Created Successfully');
     }
     public function change_order_status(Request $request)

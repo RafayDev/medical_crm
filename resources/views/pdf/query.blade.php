@@ -134,7 +134,6 @@ body::before {
                     <th>SKU</th>
                     <th>Size</th>
                     <th>Quantity</th>
-                    <th>Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -149,13 +148,8 @@ body::before {
                     <td>{{$query_product->product->sku}}</td>
                     <td>{{$query_product->product->size}}</td>
                     <td>{{$query_product->quantity}}</td>
-                    <td>{{$query_product->product->price}}</td>
                 </tr>
                 @endforeach
-                <tr>
-                    <td colspan="5" style="text-align: right;"><strong>Total:</strong></td>
-                    <td>{{$total}}</td>
-                </tr>
             </tbody>
         </table>
     </div>

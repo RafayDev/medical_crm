@@ -30,18 +30,6 @@
         /* Adjust as needed */
     }
 
-    .footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 50px;
-        /* Adjust as needed */
-        border-top: 1px solid #ddd;
-        text-align: center;
-        padding: 15px 50px;
-        /* Adjust as needed */
-    }
 
     /* .container {
             margin: 100px 20px;
@@ -75,11 +63,6 @@
 
     }
 
-
-    .footer span {
-        margin: 0 10px;
-    }
-
     /* Invoice Table */
     th,
     td {
@@ -101,7 +84,7 @@
         padding: 10px;
         font-size: 14px;
         color: #666;
-        border :none;
+        border: none;
     }
 
     .total-row {
@@ -112,12 +95,53 @@
         font-weight: bold;
         color: #671b1d;
     }
+
     .container {
-    padding-top: 120px; /* Height of the header + some spacing */
-    padding-bottom: 70px; /* Height of the footer + some spacing */
-    margin: 0 auto; /* Center the container if you want */
-    max-width: 100%; /* Optional: Set a max width if you want */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Since you commented this out, you can uncomment now if you wish */
+        padding-top: 120px;
+        /* Height of the header + some spacing */
+        padding-bottom: 70px;
+        /* Height of the footer + some spacing */
+        margin: 0 auto;
+        /* Center the container if you want */
+        max-width: 100%;
+        /* Optional: Set a max width if you want */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* Since you commented this out, you can uncomment now if you wish */
+    }
+
+    .footer {
+        width: 100%;
+        border-top: 1px solid #ddd;
+        background-color: #fff;
+        padding: 15px 0px;
+        box-sizing: border-box;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+    }
+
+    .footer-section,
+    .footer-contact {
+        display: inline-block;
+        vertical-align: top;
+        width: 23%;
+        /* 4 items, with a bit of space for margins */
+        margin: 0 1%;
+        box-sizing: border-box;
+        font-size: 14px;
+        /* Resets the font-size to a default */
+    }
+
+    address {
+        display: block;
+        margin: 5px 0;
+    }
+    .footer-notice {
+    text-align: center; /* Center the notice */
+    margin-top: 10px; /* Add space above the notice */
+    font-size: 12px; /* Smaller font size for the notice */
+    color: #888; /* Dim color to keep the notice subtle */
 }
     </style>
 </head>
@@ -208,14 +232,29 @@
                 </tr>
             </tbody>
         </table>
-
         <!-- Footer -->
         <div class="footer">
-            <span><strong>Address:</strong> 123 Street, City, Country</span>
-            <span><strong>Email:</strong> email@example.com</span>
-            <span><strong>Phone:</strong> +1 (234) 567 890</span>
+            <div class="footer-section">
+                <strong>Address 1:</strong>
+                <address>123 Street, City1, Country1</address>
+            </div>
+            <div class="footer-section">
+                <strong>Address 2:</strong>
+                <address>456 Avenue, City2, Country2</address>
+            </div>
+            <div class="footer-section">
+                <strong>Address 3:</strong>
+                <address>789 Boulevard, City3, Country3</address>
+            </div>
+            <div style="margin-top:20px">
+                <span><strong>Email:</strong> email@example.com</span>
+                <span><strong>Phone:</strong> +1 (234) 567 890</span>
+            </div>
+            <div class="footer-notice">
+                System Generated Invoice
+            </div>
         </div>
-    </div>
+
 </body>
 
 </html>

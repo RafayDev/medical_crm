@@ -237,8 +237,70 @@ $(document).ready(function() {
             },
             name: {
                 required: true,
+                minlength: 3
+            },
+            category: {
+                required: true
+            },
+            type: {
+                required: true
+            },
+            sku: {
+                required: true
+            },
+            size: {
+                required: true
+            },
+            price: {
+                required: true
+            },
+            description: {
+                required: true,
                 minlength: 3,
-                maxlength: 50
+                maxlength: 255
+            }
+        },
+        messages: {
+            image: {
+                required: 'Please select product image',
+                extension: 'Please select only jpg, jpeg, png or gif image'
+            },
+            name: {
+                required: 'Please enter product name',
+                minlength: 'Product name must be minimum 3 characters'
+            },
+            category: {
+                required: 'Please select product catagory'
+            },
+            type: {
+                required: 'Please select product type'
+            },
+            sku: {
+                required: 'Please enter product sku'
+            },
+            size: {
+                required: 'Please enter product size'
+            },
+            price: {
+                required: 'Please enter product price'
+            },
+            description: {
+                required: 'Please enter product description',
+                minlength: 'Product description must be minimum 3 characters',
+                maxlength: 'Product description must be maximum 255 characters'
+            }
+        },
+        errorElement: "small",
+        errorClass: "text-danger",
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+    $('#editProductForm').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 3,
             },
             category: {
                 required: true
@@ -259,14 +321,9 @@ $(document).ready(function() {
             }
         },
         messages: {
-            image: {
-                required: 'Please select product image',
-                extension: 'Please select only jpg, jpeg, png or gif image'
-            },
             name: {
                 required: 'Please enter product name',
-                minlength: 'Product name must be minimum 3 characters',
-                maxlength: 'Product name must be maximum 50 characters'
+                minlength: 'Product name must be minimum 3 characters'
             },
             category: {
                 required: 'Please select product catagory'
@@ -303,6 +360,7 @@ $(document).on('click', '.edit-btn', function() {
     var product_id = $(this).data('product_id');
     var product_name = $(this).data('product_name');
     var product_category = $(this).data('product_category');
+    var product_type = $(this).data('product_type');
     $.ajax({
         url: '/get-type-by-category/' + product_category,
         method: 'GET',
@@ -313,13 +371,13 @@ $(document).on('click', '.edit-btn', function() {
                     '</option>';
             });
             $('#editProductForm #type').html(html);
-            var product_type = $('#editProductForm #type').val();
+            $('#editProductForm #type').val(product_type);
         }
     });
     var product_sku = $(this).data('product_sku');
     var product_size = $(this).data('product_size');
     var product_price = $(this).data('product_price');
-    var product_description = $(this).data('product_description');
+    var product_description = $(this).data('product_description'); 
     $('#editProductForm #name').val(product_name);
     $('#editProductForm #category').val(product_category);
     $('#editProductForm #sku').val(product_sku);
@@ -340,6 +398,7 @@ $(document).on('change', '#category', function() {
                     '</option>';
             });
             $('#type').html(html);
+
         }
     });
 });

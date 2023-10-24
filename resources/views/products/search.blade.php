@@ -8,7 +8,7 @@
         <form id="searchProduct" action="{{route('search-product')}}" method="POST">
             @csrf
             <div class="input-group mb-3">
-                <input type="text" class="form-control" name="search" placeholder="Search Product"
+                <input type="text" class="form-control" name="search" placeholder="Search Product" value="{{$search}}"
                     aria-label="Search Product" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>

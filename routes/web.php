@@ -74,3 +74,4 @@ Route::post('/update-internal/{id}',[App\Http\Controllers\InternalController::cl
 Route::get('/get-type-by-category/{id}',[App\Http\Controllers\CatagoryController::class, 'get_type_by_category'])->name('get-type-by-category');
 Route::get('delete-invoice/{id}',[App\Http\Controllers\InvoiceController::class, 'delete'])->name('delete-invoice');
 Route::get('delete-query/{id}',[App\Http\Controllers\QueryController::class, 'delete'])->name('delete-query');
+Route::post('search-product',[App\Http\Controllers\ProductController::class, 'search'])->name('search-product');

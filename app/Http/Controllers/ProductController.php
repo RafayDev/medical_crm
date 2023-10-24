@@ -86,4 +86,13 @@ class ProductController extends Controller
         $product->save();
         return redirect()->back()->with('success', 'Product Updated Successfully');
     }
+    public function search(Request $request)
+    {
+        $categories = Category::all();
+        $types = Type::all();
+        $search = $request->search;
+        $products = Product::where('name', 'LIKE', '%'.$request->search.'%')->orWhere('sku', 'LIKE', '%'.$request->search.'%')->get();
+        $data = compact('categories', 'types', 'products', 'search');
+        return view('products.search')->with($data);
+    }
 }

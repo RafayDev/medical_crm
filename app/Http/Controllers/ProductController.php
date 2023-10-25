@@ -100,7 +100,8 @@ class ProductController extends Controller
         {
             $search = session('search');
         }
-        $products = Product::where('name', 'LIKE', '%'.$request->search.'%')->orWhere('sku', 'LIKE', '%'.$request->search.'%')->get();
+
+        $products = Product::where('name', 'LIKE', '%'.$search.'%')->orWhere('sku', 'LIKE', '%'.$search.'%')->get();
         $data = compact('categories', 'types', 'products', 'search');
         return view('products.search')->with($data);
     }

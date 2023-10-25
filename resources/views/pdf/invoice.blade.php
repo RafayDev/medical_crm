@@ -216,20 +216,20 @@
 
     <div class="footer">
         <div class="footer-section">
-            <strong>Address</strong>
+            <strong>Pakistan Office</strong>
+            <address>J-371 DHA EME Canal Bank Road,Lahore</address>
+        </div>
+        <div class="footer-section">
+            <strong>Head Office</strong>
             <address>7901 4th St. N STE 10963,Saint Petersburg, Florida, 33702</address>
         </div>
         <div class="footer-section">
-            <strong>Address 2:</strong>
-            <address>456 Avenue, City2, Country2</address>
-        </div>
-        <div class="footer-section">
-            <strong>Address 3:</strong>
-            <address>789 Boulevard, City3, Country3</address>
+            <strong>UK Office</strong>
+            <address>UNIT 2 65 ALEXANDRA ROAD SLOUGH SL1 2NQ</address>
         </div>
         <div style="margin-top:20px">
             <span><strong>Email:</strong> sales@artemamedical.com</span>
-            <span><strong>Phone:</strong> +1 (954) 852 -99970</span>
+            <span><strong>Phone:</strong> + 1 (210) 468 7779</span>
         </div>
         <div class="footer-notice">
             System Generated Invoice

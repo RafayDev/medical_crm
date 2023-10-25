@@ -11,16 +11,19 @@
                 <input type="text" class="form-control" name="search" placeholder="Search Product" value="{{$search}}"
                     aria-label="Search Product" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="btn btn-primary" type="submit" id="button-addon2"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
+        </form>
     </div>
 </div>
 <div class="row">
     @foreach($products as $product)
     <div class="col-md-3">
         <div class="text-center">
-        <img src="{{asset('storage/products/'.$product->image)}}" alt="{{$product->name}}" style="object-fit: contain; height: 300px;  width: 200px;">
+            <img src="{{asset('storage/products/'.$product->image)}}" alt="{{$product->name}}"
+                style="object-fit: contain; height: 300px;  width: 200px;">
             <div class="mt-2 text-left">
                 <h5>{{$product->name}}</h5>
                 <h6>SKU: {{$product->sku}}</h6>

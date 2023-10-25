@@ -13,6 +13,9 @@
                         <a href="{{route('carts')}}" class="nav-link">
                             <i class="fa-solid fa-cart-shopping me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">Cart</span>
+                            <div class="d-none d-lg-inline-flex" id="cart-count">
+
+                            </div>
                         </a>
                     </div>
                     <div class="nav-item dropdown">

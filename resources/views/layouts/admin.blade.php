@@ -120,8 +120,10 @@ function get_unread_notifications() {
 }
 
 get_unread_notifications();
+get_cart_count();
 setInterval(function() {
     get_unread_notifications();
+    get_cart_count();
 }, 5000);
 // Assuming you have a button/link with the id 'mark-as-read'
 $(document).on('click', '#mark-as-read', function(e) {
@@ -139,6 +141,15 @@ $(document).on('click', '#mark-as-read', function(e) {
     });
     
 });
+function get_cart_count() {
+    $.ajax({
+        url: "{{route('cart-count')}}",
+        type: "GET",
+        success: function(response) {
+            $('#cart-count').html(response);
+        }
+    });
+}
 
 </script>
 

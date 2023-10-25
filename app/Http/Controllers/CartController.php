@@ -71,4 +71,10 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Inquiry sent successfully!');
     }
+    public function cart_count()
+    {
+        $cart_count = Cart::where('user_id', Auth::user()->id)->count();
+        $count ='<span class="badge bg-danger rounded-pill">'.$cart_count.'</span>';
+        return $count;
+    }
 }

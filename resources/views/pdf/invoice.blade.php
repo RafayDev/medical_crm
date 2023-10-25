@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
     <style>
-    /* Global Styles */
+    @page {
+        margin: 10px;
+        padding: 5px;
+    }
+
     body {
         font-family: 'Arial', sans-serif;
-        /* background-color: #f9f9f9; */
         color: #671b1d;
         margin: 0;
         padding: 0;
     }
-
-    /* Add this to your styles */
-
 
     .header {
         position: fixed;
@@ -24,19 +24,36 @@
         left: 0;
         right: 0;
         height: 100px;
-        /* Adjust as needed */
         border-bottom: 1px solid #ddd;
         padding: 0 50px;
-        /* Adjust as needed */
+        background-color: #fff;
+        z-index: 1000;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        border-top: 1px solid #ddd;
+        background-color: #fff;
+        box-sizing: border-box;
+        /* padding: 15px; */
+        text-align: center;
+        z-index: 1000;
+        width: 100%;
+    }
+
+    .container {
+        padding-top: 120px;
+        padding-bottom: 130px;
+        margin: 0 auto;
     }
 
 
-    /* .container {
-            margin: 100px 20px;
-            padding: 30px;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        } */
+    .logo img {
+        width: 200px;
+        margin-left: -50px;
+    }
 
     h1 {
         text-align: center;
@@ -55,15 +72,6 @@
         padding: 8px 15px;
     }
 
-
-
-    .logo img {
-        /* bigger image */
-        width: 200px;
-
-    }
-
-    /* Invoice Table */
     th,
     td {
         border: 1px solid #ddd;
@@ -74,6 +82,36 @@
         color: #671b1d;
     }
 
+    .total-row {
+        background-color: #f3f3f3;
+    }
+
+    .total-row td {
+        font-weight: bold;
+        color: #671b1d;
+    }
+
+    .footer-section,
+    .footer-contact {
+        display: inline-block;
+        vertical-align: top;
+        width: 23%;
+        margin: 5px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    address {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .footer-notice {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 12px;
+        color: #888;
+    }
     .invoice-header {
         border-collapse: collapse;
         margin-bottom: 30px;
@@ -86,76 +124,18 @@
         color: #666;
         border: none;
     }
-
-    .total-row {
-        background-color: #f3f3f3;
-    }
-
-    .total-row td {
-        font-weight: bold;
-        color: #671b1d;
-    }
-
-    .container {
-        padding-top: 120px;
-        /* Height of the header + some spacing */
-        padding-bottom: 70px;
-        /* Height of the footer + some spacing */
-        margin: 0 auto;
-        /* Center the container if you want */
-        max-width: 100%;
-        /* Optional: Set a max width if you want */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        /* Since you commented this out, you can uncomment now if you wish */
-    }
-
-    .footer {
-        width: 100%;
-        border-top: 1px solid #ddd;
-        background-color: #fff;
-        padding: 15px 0px;
-        box-sizing: border-box;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-
-    .footer-section,
-    .footer-contact {
-        display: inline-block;
-        vertical-align: top;
-        width: 23%;
-        /* 4 items, with a bit of space for margins */
-        margin: 0 1%;
-        box-sizing: border-box;
-        font-size: 14px;
-        /* Resets the font-size to a default */
-    }
-
-    address {
-        display: block;
-        margin: 5px 0;
-    }
-    .footer-notice {
-    text-align: center; /* Center the notice */
-    margin-top: 10px; /* Add space above the notice */
-    font-size: 12px; /* Smaller font size for the notice */
-    color: #888; /* Dim color to keep the notice subtle */
-}
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">
-                <img src="./frontend/img/logo.png" alt="Company Logo">
-            </div>
-            <h1>Invoice</h1>
+    <div class="header">
+        <div class="logo">
+            <img src="./frontend/img/logo.png" alt="Company Logo">
         </div>
+        <h1>Invoice</h1>
+    </div>
 
+    <div class="container">
         <!-- Invoice Info -->
         @php
         $total = 0;
@@ -181,7 +161,7 @@
                     </td>
                     <td width="50%" style="text-align: right;">
                         <strong>Date:</strong>
-                        {{$invoice->created_at->format('d-m-Y')}}<br><br>
+                        {{$invoice->created_at->format('d-m-Y')}}<br>
 
                         <strong>Invoice No:</strong>
                         AML-{{$invoice->id}}
@@ -191,7 +171,7 @@
         </table>
 
         <!-- Product Info -->
-        <table style="text-align:center">
+        <table style="text-align:center; font-size:14px; ">
             <thead>
                 <tr>
                     <th>#</th>
@@ -218,43 +198,43 @@
                     <td>{{$invoice_product->total_price}} $</td>
                 </tr>
                 @endforeach
-                <tr class="total-row">
-                    <td colspan="6">Sales Tax ($)</td>
-                    <td>{{$invoice->sales_tax}} $</td>
-                </tr>
-                <tr class="total-row">
-                    <td colspan="6">Freight Charges($)</td>
-                    <td>{{$invoice->freight_charges}} $</td>
-                </tr>
-                <tr class="total-row">
-                    <td colspan="6">Total ($)</td>
-                    <td>{{$invoice->sales_tax+$invoice->freight_charges+$total}} $</td>
-                </tr>
+                    <tr class="total-row">
+                        <td colspan="6">Sales Tax ($)</td>
+                        <td>{{$invoice->sales_tax}} $</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="6">Freight Charges($)</td>
+                        <td>{{$invoice->freight_charges}} $</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="6">Total ($)</td>
+                        <td>{{$invoice->sales_tax+$invoice->freight_charges+$total}} $</td>
+                    </tr>
             </tbody>
         </table>
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-section">
-                <strong>Address 1:</strong>
-                <address>123 Street, City1, Country1</address>
-            </div>
-            <div class="footer-section">
-                <strong>Address 2:</strong>
-                <address>456 Avenue, City2, Country2</address>
-            </div>
-            <div class="footer-section">
-                <strong>Address 3:</strong>
-                <address>789 Boulevard, City3, Country3</address>
-            </div>
-            <div style="margin-top:20px">
-                <span><strong>Email:</strong> email@example.com</span>
-                <span><strong>Phone:</strong> +1 (234) 567 890</span>
-            </div>
-            <div class="footer-notice">
-                System Generated Invoice
-            </div>
-        </div>
+    </div>
 
+    <div class="footer">
+        <div class="footer-section">
+            <strong>Address</strong>
+            <address>7901 4th St. N STE 10963,Saint Petersburg, Florida, 33702</address>
+        </div>
+        <div class="footer-section">
+            <strong>Address 2:</strong>
+            <address>456 Avenue, City2, Country2</address>
+        </div>
+        <div class="footer-section">
+            <strong>Address 3:</strong>
+            <address>789 Boulevard, City3, Country3</address>
+        </div>
+        <div style="margin-top:20px">
+            <span><strong>Email:</strong> sales@artemamedical.com</span>
+            <span><strong>Phone:</strong> +1 (954) 852 -99970</span>
+        </div>
+        <div class="footer-notice">
+            System Generated Invoice
+        </div>
+    </div>
 </body>
 
 </html>

@@ -95,8 +95,10 @@
     .footer-contact {
         display: inline-block;
         vertical-align: top;
-        width: 23%;
-        margin: 5px;
+        width: 25%;
+        margin-top: 5px;
+        margin-left:20px;
+        margin-right:20px;
         box-sizing: border-box;
         font-size: 14px;
     }

@@ -9,7 +9,7 @@
             @csrf
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="search" placeholder="Search Product" value="{{$search}}"
-                    aria-label="Search Product" aria-describedby="button-addon2">
+                    aria-label="Search Product" aria-describedby="button-addon2" required>
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="submit" id="button-addon2"><i
                             class="fa-solid fa-magnifying-glass"></i></button>

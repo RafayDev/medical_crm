@@ -91,6 +91,15 @@ class ProductController extends Controller
         $categories = Category::all();
         $types = Type::all();
         $search = $request->search;
+        //put seacrh in session
+        if($request->search != '')
+        {
+        session(['search' => $search]);
+        }
+        if($search == '')
+        {
+            $search = session('search');
+        }
         $products = Product::where('name', 'LIKE', '%'.$request->search.'%')->orWhere('sku', 'LIKE', '%'.$request->search.'%')->get();
         $data = compact('categories', 'types', 'products', 'search');
         return view('products.search')->with($data);

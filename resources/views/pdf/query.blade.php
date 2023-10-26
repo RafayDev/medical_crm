@@ -174,6 +174,7 @@
             <p><strong>Company Address:</strong>{{$query->user->company->address}}</p>
             <p><strong>Email:</strong> {{$query->user->email}}</p>
             <p><strong>Phone:</strong> {{$query->user->phone}}</p>
+            <p style="font-size:12px; text-align:right;">System Generated</p>
         </div>
     </div>
 </body>

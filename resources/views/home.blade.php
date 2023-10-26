@@ -52,7 +52,7 @@
     <div class="row">
 
         <!-- Dashboard Card -->
-        <div class="col-md-4 mb-4">
+        <!-- <div class="col-md-4 mb-4">
             <a href="/home" class="{{ (request()->is('home')) ? 'active-link' : '' }} text-decoration-none card-link">
                 <div class="card custom-card shadow-lg h-100">
                     <div class="card-body text-center py-5">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </a>
-        </div>
+        </div> -->
 
         @if(Auth::user()->user_type == 'admin')
         <!-- Clients Card -->

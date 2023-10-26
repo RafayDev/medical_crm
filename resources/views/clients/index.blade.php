@@ -166,7 +166,7 @@
                         <div class="form-group">
                                 <label for="logo">Logo</label>
                                 <input type="file" class="form-control" id="logo" name="logo"
-                                    placeholder="Enter Logo" required>
+                                    placeholder="Enter Logo">
                             </div>
                             <div class="form-group">
                                 <label for="client_name">Client Name</label>

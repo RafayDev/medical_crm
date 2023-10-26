@@ -60,6 +60,13 @@
                     @endif
                     <a href="/orders" class="{{ (request()->is('orders')) ? 'active' : '' }} nav-item nav-link"><i class="fa-solid fa-boxes-packing me-2"></i>Tracking</a>
                 </div>
+                @if(Auth::user()->user_type == 'client')
+                <img src="{{asset('frontend/img/logo.png')}}" alt=""
+                        style = "margin-top:100px;width: 100%; height: 100%;">
+                <div style="width: 100%; overflow: hidden;  margin: 50px auto;white-space: wrap;">
+                        <h6 class=" text-center">{{Auth::user()->company->address}}</h6>
+                </div>
+                @endif
             </nav>
         </div>
         <!-- Sidebar End -->

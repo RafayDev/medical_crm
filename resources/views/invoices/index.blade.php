@@ -34,7 +34,7 @@
                         </td>
                         <td>
                             @if($invoice->status == "pending")
-                            <a href="{{$invoice->payment_proof}}" class="btn btn-primary"><i
+                            <a href="{{$invoice->payment_proof}}" target="_blank" class="btn btn-primary"><i
                                     class="fa-solid fa-link"></i> Click to Pay Invoice</a>
                             @endif
                         </td>

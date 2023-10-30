@@ -76,3 +76,9 @@ Route::get('delete-invoice/{id}',[App\Http\Controllers\InvoiceController::class,
 Route::get('delete-query/{id}',[App\Http\Controllers\QueryController::class, 'delete'])->name('delete-query');
 Route::match(['get', 'post'],'search-product',[App\Http\Controllers\ProductController::class, 'search'])->name('search-product');
 Route::get('cart-count',[App\Http\Controllers\CartController::class, 'cart_count'])->name('cart-count');
+Route::get('get-cart-products/{id}',[App\Http\Controllers\CartController::class, 'get_cart_products'])->name('get-cart-products');
+Route::post('create_client_invoice',[App\Http\Controllers\CartController::class, 'create_client_invoice'])->name('create_client_invoice');
+//cient invoice routes
+Route::get('client-invoices',[App\Http\Controllers\ClientInvoiceController::class, 'index'])->name('client-invoices');
+Route::get('view-client-invoice/{id}',[App\Http\Controllers\ClientInvoiceController::class, 'view'])->name('view-client-invoice');
+Route::get('delete-client-invoice/{id}',[App\Http\Controllers\ClientInvoiceController::class, 'delete'])->name('delete-client-invoice');

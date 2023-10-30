@@ -37,6 +37,9 @@
                     @endforeach
                 </tbody>
             </table>
+            @if(Auth :: user() -> user_type == 'client')
+            <button class="btn btn-primary mt-3 mb-4" data-bs-toggle="modal" data-bs-target="#productsModal" data-user_id="{{Auth::user()->id}}"><i class="fa-solid fa-file-circle-plus"></i> Create Invoice</button>
+            @endif
             <a href="{{route('send-query',Auth::user()->id)}}" class="btn btn-primary  mt-3 mb-4 float-right"><i class="fa-solid fa-share-from-square"></i> Send Inquiry</a>
         </div>
     </div>
@@ -59,6 +62,57 @@
         </div>
     </div>
 </div>
+<!-- Create Invoice Modal -->
+<div class="modal fade" id="productsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Products</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('create_client_invoice')}}" method="post">
+                @csrf
+                <input type="hidden" id="user_id" name="user_id">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <th>#</th>
+                                <th>Item Description</th>
+                                <th>SKU </th>
+                                <th>Size</th>
+                                <th>Quantity</th>
+                                <th>Price per Unit ($)</th>
+                                <th>Total Price ($)</th>
+                            </thead>
+                            <tbody id="products">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sales_tax">Sales Tax ($)</label>
+                                <input type="number" name="sales_tax" id="sales_tax" class="form-control"
+                                    placeholder="Enter Sales Tax" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="freight_charges">Freight Charges ($)</label>
+                                <input type="number" name="freight_charges" id="freight_charges" class="form-control"
+                                    placeholder="Enter Freight Charges" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Create Invoice</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 @section('scripts')
 <script>
@@ -68,5 +122,28 @@
         var modal = $(this)
         modal.find('.modal-footer #modal-delete-btn').attr("href", "{{route('delete-cart', '')}}"+"/"+cart_id);
     })
+    $('#productsModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget)
+    var user_id = button.data('user_id')
+    $('#user_id').val(user_id)
+    var modal = $(this)
+    $.ajax({
+        url: "/get-cart-products/" + user_id,
+        type: "GET",
+        success: function(response) {
+            $('#products').html(response);
+        }
+    })
+})
+function calculate_total_price(price_per_unit, quantity, count) {
+    var total_price = price_per_unit * quantity;
+    $('#total-price-col'+ count).html(total_price + '$');
+    $('input[name="total_price[]"]').eq(count - 1).val(total_price);
+    var full_total = 0;
+    $('input[name="total_price[]"]').each(function() {
+        full_total += parseFloat($(this).val());
+    });
+    $('#full-total').html(full_total + '$');
+}
 </script>
 @endsection

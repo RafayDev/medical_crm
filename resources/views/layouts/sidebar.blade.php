@@ -59,6 +59,7 @@
                     <a href="/invoices" class="{{ (request()->is('invoices')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Invocies</a>
                     @endif
                     <a href="/orders" class="{{ (request()->is('orders')) ? 'active' : '' }} nav-item nav-link"><i class="fa-solid fa-boxes-packing me-2"></i>Tracking</a>
+                    <a href="/client-invoices" class="{{ (request()->is('client-invoices')) ? 'active' : '' }} nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Your Invoices</a>
                 </div>
                 @if(Auth::user()->user_type == 'client')
                 <img src="{{asset('frontend/img/logo.png')}}" alt=""

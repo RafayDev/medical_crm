@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('client_invoices', function (Blueprint $table) {
             $table->id();
             $table->Integer('user_id');
-            $table->Integer('freight_charges');
-            $table->Integer('sales_tax');
+            $table->string('freight_charges');
+            $table->string('sales_tax');
             $table->timestamps();
         });
     }

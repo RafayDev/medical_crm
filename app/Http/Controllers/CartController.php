@@ -50,11 +50,11 @@ class CartController extends Controller
         $query->save();
         foreach($carts as $cart)
         {
-            $cart = new QueryProduct;
-            $cart->query_id = $query->id;
-            $cart->product_id = $cart->product_id;
-            $cart->quantity = $cart->quantity;
-            $cart->save();
+            $query_product = new QueryProduct;
+            $query_product->query_id = $query->id;
+            $query_product->product_id = $cart->product_id;
+            $query_product->quantity = $cart->quantity;
+            $query_product->save();
         }
         Cart::where('user_id', $user_id)->delete();
         //send notification to admin and internal

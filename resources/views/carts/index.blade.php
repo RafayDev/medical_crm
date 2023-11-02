@@ -74,6 +74,39 @@
                 @csrf
                 <input type="hidden" id="user_id" name="user_id">
                 <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Client Name</label>
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="phone">Client Phone</label>
+                            <input type="text" name="phone" id="phone" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email">Client Email</label>
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" name="company" id="company" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="address">Company Address</label>
+                            <textarea name="address" id="address" cols="30" rows="5" class="form-control"
+                                required></textarea>
+                        </div>
+                    </div>
+                </div>
                     <div class="table-responsive">
                         <table class="table table-bordered text-center">
                             <thead>

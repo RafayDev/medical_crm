@@ -128,6 +128,19 @@
         text-align: center;
         margin: 10px 0;
     }
+    .invoice-header {
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    .invoice-header td {
+        vertical-align: top;
+        padding: 10px;
+        font-size: 14px;
+        color: #666;
+        border: none;
+        text align: left;
+    }
     </style>
 </head>
 
@@ -141,8 +154,36 @@
 
     <div class="container">
         <h1>Invoice</h1>
-        <h3>{{$invoice->created_at->format('d-m-Y')}}</h3>
     </div>
+    <table class="invoice-header">
+            <tbody>
+                <tr>
+                    <td width="50%">
+                        <strong>Company Name:</strong>
+                        {{$invoice->company}}<br>
+
+                        <strong>Client Name:</strong>
+                        {{$invoice->name}}<br>
+
+                        <strong>Email:</strong>
+                        {{$invoice->email}}<br>
+
+                        <strong>Phone:</strong>
+                        {{$invoice->phone}}<br>
+
+                        <strong>Address:</strong>
+                        {{$invoice->address}}
+                    </td>
+                    <td width="50%" style="text-align: right;">
+                        <strong>Date:</strong>
+                        {{$invoice->created_at->format('d-m-Y')}}<br>
+
+                        <strong>Invoice No:</strong>
+                        {{$invoice->user->company->quotation_series}}-{{$invoice->id}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     @php
     $total = 0;
     @endphp

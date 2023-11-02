@@ -113,6 +113,11 @@ class CartController extends Controller
     {
         $invoice = new ClientInvoices();
         $invoice->user_id = $request->user_id;
+        $invoice->name = $request->name;
+        $invoice->email = $request->email;
+        $invoice->phone = $request->phone;
+        $invoice->address = $request->address;
+        $invoice->company = $request->company;
         $invoice->sales_tax = $request->sales_tax;
         $invoice->freight_charges = $request->freight_charges;
         $invoice->save();

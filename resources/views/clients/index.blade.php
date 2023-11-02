@@ -28,6 +28,11 @@
                                     placeholder="Enter Logo" required>
                             </div>
                             <div class="form-group">
+                                <label for="stamp">Stamp</label>
+                                <input type="file" class="form-control" id="stamp" name="stamp"
+                                    placeholder="Enter Stamp">
+                            </div>
+                            <div class="form-group">
                                 <label for="client_name">Client Name</label>
                                 <input type="text" class="form-control" id="client_name" name="client_name"
                                     placeholder="Enter Client Name" required>
@@ -160,13 +165,18 @@
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Update Client</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{route('add-client')}}" method="POST" id="updateClientForm">
+                    <form action="{{route('add-client')}}" method="POST" id="updateClientForm" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                         <div class="form-group">
                                 <label for="logo">Logo</label>
                                 <input type="file" class="form-control" id="logo" name="logo"
                                     placeholder="Enter Logo">
+                            </div>
+                            <div class="form-group">
+                                <label for="stamp">Stamp</label>
+                                <input type="file" class="form-control" id="stamp" name="stamp"
+                                    placeholder="Enter Stamp">
                             </div>
                             <div class="form-group">
                                 <label for="client_name">Client Name</label>

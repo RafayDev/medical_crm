@@ -48,6 +48,12 @@ class ClientController extends Controller
         $company->name = $request->company_name;
         $company->address = $request->client_address;
         $company->quotation_series = $request->quotation_series;
+        if ($request->hasFile('stamp')) {
+            $image = $request->file('stamp');
+            $image_name = time(). '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/stamps', $image_name);
+            $company->stamp = $image_name;
+        }
         $company->save();
         $user = new User();
         $user->name = $request->client_name;
@@ -99,6 +105,12 @@ class ClientController extends Controller
         $company->name = $request->company_name;
         $company->address = $request->client_address;
         $company->quotation_series = $request->quotation_series;
+        if ($request->hasFile('stamp')) {
+            $image = $request->file('stamp');
+            $image_name = time(). '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/stamps', $image_name);
+            $company->stamp = $image_name;
+        }
         $company->save();
         $user->name = $request->client_name;
         $user->email = $request->client_email;

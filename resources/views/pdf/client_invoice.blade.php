@@ -63,6 +63,7 @@
 
     .container {
         width: 95%;
+        height: 70%
         margin: 2em auto;
     }
 
@@ -109,7 +110,7 @@
     }
 
     .footer {
-        position: fixed;
+        position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
@@ -117,7 +118,6 @@
         padding: 20px 0;
         z-index: 999;
     }
-
     .footer-content {
         width: 100%;
         margin: 0 auto;
@@ -187,12 +187,19 @@
                     </tr>
             </tbody>
         </table>
+    <div class="stamp">
+        @if($invoice->user->company->stamp)
+        <img src="./storage/stamps/{{$invoice->user->company->stamp}}" alt="Company Stamp" 
+        style="width: 100px; height: 100px; margin-left: 10%; margin-top: 10px; margin-bottom: 10px;"
+        >
+        @endif
+    </div>
     <div class="footer">
         <div class="footer-content">
             <p><strong>Company Address:</strong>{{$invoice->user->company->address}}</p>
             <p><strong>Email:</strong> {{$invoice->user->email}}</p>
             <p><strong>Phone:</strong> {{$invoice->user->phone}}</p>
-            <p style="font-size:12px; text-align:right;">System Generated</p>
+            <p style="font-size:12px;">System Generated</p>
         </div>
     </div>
 </body>
